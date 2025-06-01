@@ -32,6 +32,10 @@ exports.updateChat = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName } = req.body;
 
+  if (!id) {
+    return res.status(400).json({ error: "Id param is required" });
+  }
+
   if (!firstName || !lastName) {
     return res
       .status(400)
@@ -62,7 +66,7 @@ exports.deleteChat = async (req, res) => {
   const { id } = req.params;
 
   if (!id) {
-    return res.status(404).json({ error: "Id is required" });
+    return res.status(404).json({ error: "Id param is required" });
   }
 
   try {

@@ -16,7 +16,7 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 
-app.use("/api", [chatRoutes, messageRoutes]);
+app.use("/api/chats", [chatRoutes, messageRoutes]);
 
 mongoose
   .connect(MONGO_URI)
