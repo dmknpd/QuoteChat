@@ -8,6 +8,10 @@
   --secondary-text-color: #b1b1b1;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -15,7 +19,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--main-text-color);
-  box-sizing: border-box;
   height: 100vh;
 }
 

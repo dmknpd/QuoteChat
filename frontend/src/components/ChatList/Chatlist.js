@@ -2,7 +2,7 @@ import styles from "./ChatList.module.css";
 
 import ChatListItem from "../ChatListItem/ChatListItem";
 
-function Sidebar() {
+function ChatList() {
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>Chats</h3>
@@ -16,4 +16,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default ChatList;

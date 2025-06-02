@@ -11,7 +11,7 @@
   flex-direction: row;
   align-items: center;
   padding: 20px;
-  gap: 20px;
+  gap: 15px;
 
   background-color: var(--main-color);
   border-bottom: 1px solid var(--secondary-color);
@@ -37,7 +37,7 @@
 .input {
   width: 100%;
   border-radius: 15px;
-  height: 30px;
+  height: 40px;
   border: 1px solid var(--secondary-color);
   outline: none;
   padding: 5px 15px;
@@ -45,7 +45,7 @@
 
 .send_icon {
   position: absolute;
-  right: 15px;
+  right: 30px;
   top: 50%;
   transform: translateY(-50%);
   width: 25px;

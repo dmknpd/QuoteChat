@@ -27,10 +27,10 @@
 }
 
 .log_button {
-  height: 26px;
+  height: 30px;
   background-color: #fff;
   border: 1px solid var(--secondary-color);
-  border-radius: 10px;
+  border-radius: 12px;
   color: var(--accent-color);
   font-weight: 800;
 }
@@ -49,7 +49,7 @@
 .search {
   width: 100%;
   border-radius: 25px;
-  height: 25px;
+  height: 35px;
   border: 1px solid var(--secondary-color);
   outline: none;
   padding: 5px 30px;
