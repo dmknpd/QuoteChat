@@ -1,0 +1,67 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+
+  background-color: var(--main-color);
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+.user_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user_icon {
+  width: 40px;
+  height: 40px;
+}
+
+.log_button {
+  height: 26px;
+  background-color: #fff;
+  border: 1px solid var(--secondary-color);
+  border-radius: 10px;
+  color: var(--accent-color);
+  font-weight: 800;
+}
+
+.log_button:hover {
+  background-color: var(--main-color);
+}
+
+.search_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.search {
+  width: 100%;
+  border-radius: 25px;
+  height: 25px;
+  border: 1px solid var(--secondary-color);
+  outline: none;
+  padding: 5px 30px;
+}
+
+.lens_icon {
+  position: absolute;
+  left: 10px;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  opacity: 70%;
+}

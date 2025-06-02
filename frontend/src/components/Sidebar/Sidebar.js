@@ -1,26 +1,27 @@
-import "./Sidebar.css";
+import styles from "./Sidebar.module.css";
+import user_icon from "../../img/user_icon.svg";
+import lens_icon from "../../img/lens_icon.svg";
+
+import ChatList from "../ChatList/ChatList";
 
 function Sidebar() {
   return (
-    <div className="sidebar">
-      <div className="sidebar_header">
-        <div className="user_container">
-          <img src="" alt="" className="user_icon" />
-          <button className="log_button">Log in</button>
+    <div className={styles.main}>
+      <div className={styles.header}>
+        <div className={styles.user_container}>
+          <img src={user_icon} alt="user_icon" className={styles.user_icon} />
+          <button className={styles.log_button}>Log in</button>
         </div>
-        <div className="search">
-          <input type="text" />
-        </div>
-      </div>
-      <div className="chat_list_container">
-        <h2 className="chat_title">Chats</h2>
-        <div className="chat_list">
-          <div className="chat_list_item">Alice</div>
-          <div className="chat_list_item">Josefina</div>
-          <div className="chat_list_item">Velazquez</div>
-          <div className="chat_list_item">Piter</div>
+        <div className={styles.search_container}>
+          <img className={styles.lens_icon} src={lens_icon} alt="lens_icon" />
+          <input
+            className={styles.search}
+            type="text"
+            placeholder="Search or start new chat"
+          />
         </div>
       </div>
+      <ChatList />
     </div>
   );
 }

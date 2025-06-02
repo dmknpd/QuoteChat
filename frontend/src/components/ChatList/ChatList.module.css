@@ -1,0 +1,9 @@
+.container {
+  flex-grow: 1;
+}
+
+.title {
+  color: var(--accent-color);
+  margin-left: 20px;
+  font-weight: 500;
+}
