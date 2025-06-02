@@ -1,10 +1,27 @@
 const Chat = require("../models/chat");
+const Message = require("../models/message");
 
 exports.getAllChats = async (req, res) => {
   try {
-    const chats = await Chat.find().sort({ createdAt: 1 });
+    const chats = await Chat.find()
+      .sort({ createdAt: 1 })
+      .select("-__v")
+      .lean();
 
-    res.status(200).json(chats);
+    const chatsWithLastMessage = await Promise.all(
+      chats.map(async (chat) => {
+        const lastMessage = await Message.findOne({ chatId: chat._id })
+          .sort({ createdAt: -1 })
+          .select("-__v -chatId");
+
+        return {
+          ...chat,
+          lastMessage: lastMessage || null,
+        };
+      })
+    );
+
+    res.status(200).json(chatsWithLastMessage);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

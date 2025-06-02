@@ -10,7 +10,7 @@ function ChatListItem({ chat, onDelete }) {
         <div className={styles.name}>
           {chat.firstName} {chat.lastName}
         </div>
-        <div className={styles.message}>Hello, whats up?</div>
+        <div className={styles.message}>{chat?.lastMessage?.text || ""}</div>
       </div>
 
       <div className={styles.date}>
