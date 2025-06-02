@@ -19,6 +19,21 @@ function ChatList() {
     }
   };
 
+  const handleDeleteChat = async (chatId) => {
+    if (!window.confirm("Do you want to delete this chat?")) {
+      return;
+    }
+
+    try {
+      await deleteChat(chatId);
+      setChats((prev) => prev.filter((chat) => chat._id !== chatId));
+      toast.success("Chat successfully deleted!");
+    } catch (error) {
+      console.error("Error deleting chat", error);
+      toast.error("Error deleting chat.");
+    }
+  };
+
   useEffect(() => {
     fetchChats();
   }, []);
@@ -28,7 +43,11 @@ function ChatList() {
       <h3 className={styles.title}>Chats</h3>
       <ul className={styles.chat_list}>
         {chats.map((chat) => (
-          <ChatListItem key={chat._id} chat={chat} />
+          <ChatListItem
+            key={chat._id}
+            chat={chat}
+            onDelete={handleDeleteChat}
+          />
         ))}
       </ul>
     </div>
