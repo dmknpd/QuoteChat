@@ -1,4 +1,4 @@
-import styles from "./Chat.module.css";
+import styles from "./ChatWindow.module.css";
 import user_icon from "../../img/user_icon.svg";
 import paper_plane from "../../img/paper_plane.svg";
 

@@ -6,4 +6,9 @@
   color: var(--accent-color);
   margin-left: 20px;
   font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.chat_list {
+  list-style: none;
 }

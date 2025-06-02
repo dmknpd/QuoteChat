@@ -1,13 +1,17 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Chat from "./components/Chat/Chat";
+import ChatWindow from "./components/Chat/ChatWindow";
 
 function App() {
   return (
     <div className="App">
       <main className="main">
         <Sidebar />
-        <Chat />
+        <ChatWindow />
+        <ToastContainer position="top-right" autoClose={3000} />
       </main>
     </div>
   );
