@@ -6,6 +6,8 @@
   --accent-color: rgb(49, 206, 203);
   --main-text-color: #555555;
   --secondary-text-color: #b1b1b1;
+  --user-chat-color: #dfdfdf;
+  --auto-chat-color: #3d4052;
 }
 
 * {

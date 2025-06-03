@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 import { getMessages } from "../../api/api";
 import { chatContext } from "../../context/ChatContext";
+import MessageItem from "../MessageItem/MessageItem";
 
 import styles from "./ChatWindow.module.css";
 import user_icon from "../../img/user_icon.svg";
@@ -22,13 +23,13 @@ function Chat() {
         toast.error("Error fetching messages.");
       }
     } else {
-      setMessages(null);
+      setMessages([]);
     }
   };
 
   useEffect(() => {
     fetchChatMessages();
-  }, selectedChat);
+  }, [selectedChat]);
 
   return (
     <div className={styles.container}>
@@ -44,15 +45,19 @@ function Chat() {
           ""
         )}
       </div>
-      <div className={styles.main}>
+      <ul className={styles.main}>
         {selectedChat ? (
-          <>{/* CHAT */}</>
+          messages.length === 0 ? (
+            <div className={styles.select}>No messages in this chat yet.</div>
+          ) : (
+            messages.map((msg) => <MessageItem key={msg._id} message={msg} />)
+          )
         ) : (
           <div className={styles.select}>
             Select who you would like to write to
           </div>
         )}
-      </div>
+      </ul>
       <div className={styles.footer}>
         {selectedChat ? (
           <>

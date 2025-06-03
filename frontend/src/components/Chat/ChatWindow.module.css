@@ -26,6 +26,14 @@
   background-color: #faf8f9;
   flex-grow: 1;
   border-bottom: 1px solid var(--secondary-color);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 100%;
+  overflow: auto;
+
+  list-style: none;
 }
 
 .select {

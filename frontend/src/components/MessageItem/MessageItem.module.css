@@ -1,0 +1,41 @@
+.message {
+  display: flex;
+}
+
+.message_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user {
+  justify-content: flex-end;
+}
+
+.auto {
+  justify-content: flex-start;
+}
+
+.content {
+  padding: 15px;
+  border-radius: 20px;
+  background-color: var(--auto-chat-color);
+  font-size: 14px;
+  width: fit-content;
+
+  color: var(--main-color);
+}
+
+.date {
+  color: var(--secondary-text-color);
+  font-size: 0.9rem;
+}
+
+.user .message_container {
+  align-items: flex-end;
+}
+
+.user .content {
+  background-color: var(--user-chat-color);
+  color: var(--main-text-color);
+}
