@@ -41,15 +41,13 @@ function ChatWindow() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        {selectedChat ? (
+        {selectedChat && (
           <>
             <img src={user_icon} alt="user_icon" className={styles.user_icon} />
             <h4 className={styles.chat_name}>
               {selectedChat.firstName} {selectedChat.lastName}
             </h4>
           </>
-        ) : (
-          ""
         )}
       </div>
       <ul className={styles.main} ref={messagesEndRef}>
@@ -66,7 +64,7 @@ function ChatWindow() {
         )}
       </ul>
       <div className={styles.footer}>
-        {selectedChat ? (
+        {selectedChat && (
           <>
             <button className={styles.send_icon} />
             <input
@@ -75,8 +73,6 @@ function ChatWindow() {
               placeholder="Type your message"
             />
           </>
-        ) : (
-          ""
         )}
       </div>
     </div>

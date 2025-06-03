@@ -1,13 +1,30 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+
+import { createChat } from "../../api/api";
 
 import styles from "./Sidebar.module.css";
 import user_icon from "../../img/user_icon.svg";
 import lens_icon from "../../img/lens_icon.svg";
 
 import ChatList from "../ChatList/ChatList";
+import NewChatModal from "../NewChatModal/NewChatModal";
 
 function Sidebar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCreateNewChat = async (data) => {
+    try {
+      const response = await createChat(data);
+
+      toast.success(`Created chat with ${data.firstName} ${data.lastName}.`);
+    } catch (error) {
+      console.error("Error creating chat", error);
+      toast.error("Error creating chat.");
+    }
+  };
+
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -17,6 +34,10 @@ function Sidebar() {
         </div>
         <div className={styles.search_container}>
           <img className={styles.lens_icon} src={lens_icon} alt="lens_icon" />
+          <button
+            className={styles.plus_icon}
+            onClick={() => setIsModalOpen(true)}
+          />
           <input
             className={styles.search}
             type="text"
@@ -26,6 +47,12 @@ function Sidebar() {
         </div>
       </div>
       <ChatList searchQuery={searchQuery} />
+      {isModalOpen && (
+        <NewChatModal
+          onClose={() => setIsModalOpen(false)}
+          onCreateChat={handleCreateNewChat}
+        />
+      )}
     </div>
   );
 }

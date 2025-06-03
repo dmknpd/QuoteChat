@@ -67,3 +67,24 @@
   pointer-events: none;
   opacity: 70%;
 }
+
+.plus_icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+
+  background-image: url("../../img/plus_icon_line.svg");
+  background-size: cover;
+  cursor: pointer;
+
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.plus_icon:hover {
+  background-image: url("../../img/plus_icon.svg");
+}
