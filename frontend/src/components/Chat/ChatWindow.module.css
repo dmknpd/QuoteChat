@@ -28,6 +28,15 @@
   border-bottom: 1px solid var(--secondary-color);
 }
 
+.select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  color: var(--secondary-text-color);
+}
+
 .footer {
   padding: 20px;
   background-color: var(--main-color);

@@ -1,10 +1,15 @@
+import { useContext } from "react";
+
+import { chatContext } from "../../context/ChatContext";
+
 import styles from "./ChatListItem.module.css";
 import user_icon from "../../img/user_icon.svg";
 import close_icon from "../../img/close_icon.svg";
 
 function ChatListItem({ chat, onDelete }) {
+  const { setSelectedChat } = useContext(chatContext);
   return (
-    <li className={styles.container}>
+    <li className={styles.container} onClick={() => setSelectedChat(chat)}>
       <img src={user_icon} alt="user_icon" className={styles.user_icon} />
       <div className={styles.content}>
         <div className={styles.name}>
@@ -24,7 +29,10 @@ function ChatListItem({ chat, onDelete }) {
         src={close_icon}
         alt="close_icon"
         className={styles.delete}
-        onClick={() => onDelete(chat._id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(chat._id);
+        }}
       />
     </li>
   );
