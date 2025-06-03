@@ -61,7 +61,7 @@ function Chat() {
       <div className={styles.footer}>
         {selectedChat ? (
           <>
-            <img
+            <div
               src={paper_plane}
               alt="send_icon"
               className={styles.send_icon}

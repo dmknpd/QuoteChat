@@ -62,11 +62,17 @@
 
 .send_icon {
   position: absolute;
-  right: 30px;
+  right: 35px;
   top: 50%;
   transform: translateY(-50%);
   width: 25px;
   height: 25px;
-  opacity: 60%;
+
+  background-image: url("../../img/paper_plane.svg");
+  background-size: cover;
   cursor: pointer;
+}
+
+.send_icon:hover {
+  background-image: url("../../img/paper_plane_line.svg");
 }
