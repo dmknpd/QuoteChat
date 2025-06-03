@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import { getMessages } from "../../api/api";
@@ -7,11 +7,12 @@ import MessageItem from "../MessageItem/MessageItem";
 
 import styles from "./ChatWindow.module.css";
 import user_icon from "../../img/user_icon.svg";
-import paper_plane from "../../img/paper_plane.svg";
 
-function Chat() {
+function ChatWindow() {
   const { selectedChat } = useContext(chatContext);
   const [messages, setMessages] = useState([]);
+
+  const messagesEndRef = useRef(null);
 
   const fetchChatMessages = async () => {
     if (selectedChat) {
@@ -31,6 +32,12 @@ function Chat() {
     fetchChatMessages();
   }, [selectedChat]);
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -45,7 +52,7 @@ function Chat() {
           ""
         )}
       </div>
-      <ul className={styles.main}>
+      <ul className={styles.main} ref={messagesEndRef}>
         {selectedChat ? (
           messages.length === 0 ? (
             <div className={styles.select}>No messages in this chat yet.</div>
@@ -61,11 +68,7 @@ function Chat() {
       <div className={styles.footer}>
         {selectedChat ? (
           <>
-            <div
-              src={paper_plane}
-              alt="send_icon"
-              className={styles.send_icon}
-            />
+            <button className={styles.send_icon} />
             <input
               className={styles.input}
               type="text"
@@ -80,4 +83,4 @@ function Chat() {
   );
 }
 
-export default Chat;
+export default ChatWindow;

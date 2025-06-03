@@ -71,6 +71,10 @@
   background-image: url("../../img/paper_plane.svg");
   background-size: cover;
   cursor: pointer;
+
+  border: none;
+  background-color: transparent;
+  padding: 0;
 }
 
 .send_icon:hover {

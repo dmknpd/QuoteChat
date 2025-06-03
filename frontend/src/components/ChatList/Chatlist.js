@@ -6,7 +6,7 @@ import { getChats, deleteChat } from "../../api/api";
 import styles from "./ChatList.module.css";
 import ChatListItem from "../ChatListItem/ChatListItem";
 
-function ChatList() {
+function ChatList({ searchQuery }) {
   const [chats, setChats] = useState([]);
 
   const fetchChats = async () => {
@@ -34,6 +34,11 @@ function ChatList() {
     }
   };
 
+  const filteredChats = chats.filter((chat) => {
+    const fullName = (chat.firstName + " " + chat.lastName).toLowerCase();
+    return fullName.includes(searchQuery.toLowerCase());
+  });
+
   useEffect(() => {
     fetchChats();
   }, []);
@@ -42,7 +47,7 @@ function ChatList() {
     <div className={styles.container}>
       <h3 className={styles.title}>Chats</h3>
       <ul className={styles.chat_list}>
-        {chats.map((chat) => (
+        {filteredChats.map((chat) => (
           <ChatListItem
             key={chat._id}
             chat={chat}

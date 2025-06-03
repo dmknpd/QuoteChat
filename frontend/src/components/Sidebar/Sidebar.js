@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import styles from "./Sidebar.module.css";
 import user_icon from "../../img/user_icon.svg";
 import lens_icon from "../../img/lens_icon.svg";
@@ -5,6 +7,7 @@ import lens_icon from "../../img/lens_icon.svg";
 import ChatList from "../ChatList/ChatList";
 
 function Sidebar() {
+  const [searchQuery, setSearchQuery] = useState("");
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -18,10 +21,11 @@ function Sidebar() {
             className={styles.search}
             type="text"
             placeholder="Search or start new chat"
+            onChange={(e) => setSearchQuery(e.target.value.trim())}
           />
         </div>
       </div>
-      <ChatList />
+      <ChatList searchQuery={searchQuery} />
     </div>
   );
 }

@@ -99,23 +99,3 @@ exports.deleteChat = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-exports.searchChat = async (req, res) => {
-  const query = req.query.q;
-  if (!query) {
-    return res.status(400).json({ message: "Search query is required" });
-  }
-
-  try {
-    const chats = await Chat.find({
-      $or: [
-        { firstName: { $regex: query, $options: "i" } },
-        { lastName: { $regex: query, $options: "i" } },
-      ],
-    }).sort({ createdAt: 1 });
-
-    res.status(200).json(chats);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
