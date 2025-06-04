@@ -31,19 +31,31 @@
 .name {
 }
 
-.container:hover .name::after {
-  content: "";
-  display: inline-block;
-  width: 22px;
-  height: 22px;
+.name_container {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.update {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  bottom: 4px;
+
   background-image: url("../../img/pencil_icon.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin-left: 5px;
-  position: absolute;
-  top: 18px;
-  opacity: 70%;
+  background-size: cover;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.container:hover .update {
+  opacity: 0.8;
 }
 
 .message {
@@ -64,10 +76,7 @@
 }
 
 .delete {
-  display: none;
-}
-
-.container:hover .delete {
+  opacity: 0;
   display: block;
   position: absolute;
   width: 25px;
@@ -75,5 +84,9 @@
   bottom: 10%;
   border: none;
   background: none;
-  opacity: 60%;
+  transition: opacity 0.2s ease;
+}
+
+.container:hover .delete {
+  opacity: 0.6;
 }

@@ -1,22 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { createNewChat, setNewChatErrors } from "../../store/chatSlice";
+import {
+  createNewChat,
+  updateExistingChat,
+  setChatModalErrors,
+} from "../../store/chatSlice";
 
-import styles from "./NewChatModal.module.css";
+import styles from "./ChatModal.module.css";
 
-function NewChatModal({ onClose }) {
+function ChatModal({ onClose, isEdit = false, chat = null }) {
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const newChatErrors = useSelector((state) => state.chat.newChatErrors);
+  const chatModalErrors = useSelector((state) => state.chat.chatModalErrors);
 
-  const handleCreateNewChat = async (event) => {
+  useEffect(() => {
+    if (isEdit && chat) {
+      setFirstName(chat.firstName || "");
+      setLastName(chat.lastName || "");
+    }
+  }, [isEdit, chat]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    dispatch(setNewChatErrors(null));
+    dispatch(setChatModalErrors(null));
 
+    if (!validate()) {
+      return;
+    }
+
+    try {
+      if (isEdit) {
+        await dispatch(
+          updateExistingChat({
+            chatId: chat._id,
+            chatData: { firstName, lastName },
+          })
+        ).unwrap();
+        toast.success("Chat updated.");
+      } else {
+        await dispatch(createNewChat({ firstName, lastName })).unwrap();
+        toast.success(`Created chat with ${firstName} ${lastName}.`);
+      }
+      handleOnClose();
+    } catch (error) {
+      console.error("Error creating chat:", error);
+      toast.error("Error creating chat.");
+    }
+  };
+
+  const validate = () => {
     const trimmedFirstName = firstName.trim();
     const trimmedLastName = lastName.trim();
 
@@ -38,36 +74,27 @@ function NewChatModal({ onClose }) {
     }
 
     if (Object.keys(errors).length > 0) {
-      dispatch(setNewChatErrors(errors));
-      return;
+      dispatch(setChatModalErrors(errors));
+      return false;
     }
-
-    try {
-      await dispatch(createNewChat({ firstName, lastName })).unwrap();
-
-      setFirstName("");
-      setLastName("");
-
-      toast.success(`Created chat with ${firstName} ${lastName}.`);
-      onClose();
-    } catch (error) {
-      console.error("Error creating chat:", error);
-      toast.error("Error creating chat.");
-    }
+    return true;
   };
 
   const handleOnClose = () => {
     setFirstName("");
     setLastName("");
-    dispatch(setNewChatErrors(null));
+    dispatch(setChatModalErrors(null));
     onClose();
   };
 
   return (
     <div className={styles.modal}>
       <div className={styles.content}>
-        <h2 className={styles.title}>Create New Chat</h2>
-        <form onSubmit={handleCreateNewChat}>
+        <h2 className={styles.title}>
+          {" "}
+          {isEdit ? "Edit Chat" : "Create New Chat"}
+        </h2>
+        <form onSubmit={handleSubmit}>
           <div className={styles.input_container}>
             <label className={styles.label} htmlFor="firstName">
               First Name
@@ -80,8 +107,8 @@ function NewChatModal({ onClose }) {
               onChange={(e) => setFirstName(e.target.value)}
               required
             />
-            {newChatErrors && (
-              <p className={styles.error}>{newChatErrors.firstName}</p>
+            {chatModalErrors && (
+              <p className={styles.error}>{chatModalErrors.firstName}</p>
             )}
           </div>
           <div className={styles.input_container}>
@@ -96,14 +123,14 @@ function NewChatModal({ onClose }) {
               onChange={(e) => setLastName(e.target.value)}
               required
             />
-            {newChatErrors && (
-              <p className={styles.error}>{newChatErrors.lastName}</p>
+            {chatModalErrors && (
+              <p className={styles.error}>{chatModalErrors.lastName}</p>
             )}
           </div>
 
           <div className={styles.buttons}>
             <button type="submit" className={styles.create_button}>
-              Create
+              {isEdit ? "Update" : "Create"}
             </button>
             <button
               type="button"
@@ -119,4 +146,4 @@ function NewChatModal({ onClose }) {
   );
 }
 
-export default NewChatModal;
+export default ChatModal;

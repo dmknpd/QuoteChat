@@ -5,11 +5,16 @@ import user_icon from "../../img/user_icon.svg";
 import lens_icon from "../../img/lens_icon.svg";
 
 import ChatList from "../ChatList/ChatList";
-import NewChatModal from "../NewChatModal/NewChatModal";
+import ChatModal from "../ChatModal/ChatModal";
 
 function Sidebar() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const handleModalOpen = (event) => {
+    event.preventDefault();
+    setIsCreateModalOpen(true);
+  };
 
   return (
     <div className={styles.main}>
@@ -20,10 +25,7 @@ function Sidebar() {
         </div>
         <div className={styles.search_container}>
           <img className={styles.lens_icon} src={lens_icon} alt="lens_icon" />
-          <button
-            className={styles.plus_icon}
-            onClick={() => setIsModalOpen(true)}
-          />
+          <button className={styles.plus_icon} onClick={handleModalOpen} />
           <input
             className={styles.search}
             type="text"
@@ -34,7 +36,9 @@ function Sidebar() {
       </div>
       <h3 className={styles.title}>Chats</h3>
       <ChatList searchQuery={searchQuery} />
-      {isModalOpen && <NewChatModal onClose={() => setIsModalOpen(false)} />}
+      {isCreateModalOpen && (
+        <ChatModal onClose={() => setIsCreateModalOpen(false)} />
+      )}
     </div>
   );
 }

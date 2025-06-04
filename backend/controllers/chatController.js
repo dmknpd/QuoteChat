@@ -54,15 +54,18 @@ exports.createChat = async (req, res) => {
 exports.updateChat = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName } = req.body;
+  const { error } = chatSchema.validate(
+    { firstName, lastName },
+    { abortEarly: false }
+  );
 
   if (!id) {
     return res.status(400).json({ error: "Id param is required" });
   }
 
-  if (!firstName || !lastName) {
-    return res
-      .status(400)
-      .json({ error: "First name and last name are required" });
+  if (error) {
+    const errors = formatErrors(error);
+    return res.status(400).json({ errors });
   }
 
   try {
