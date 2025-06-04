@@ -12,3 +12,12 @@
 .chat_list {
   list-style: none;
 }
+
+.select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  color: var(--secondary-text-color);
+}

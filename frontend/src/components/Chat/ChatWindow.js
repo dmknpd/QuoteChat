@@ -58,9 +58,7 @@ function ChatWindow() {
             messages.map((msg) => <MessageItem key={msg._id} message={msg} />)
           )
         ) : (
-          <div className={styles.select}>
-            Select who you would like to write to
-          </div>
+          <div className={styles.select}>Select a chat to start messaging.</div>
         )}
       </ul>
       <div className={styles.footer}>

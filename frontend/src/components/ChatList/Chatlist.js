@@ -47,13 +47,19 @@ function ChatList({ searchQuery }) {
     <div className={styles.container}>
       <h3 className={styles.title}>Chats</h3>
       <ul className={styles.chat_list}>
-        {filteredChats.map((chat) => (
-          <ChatListItem
-            key={chat._id}
-            chat={chat}
-            onDelete={handleDeleteChat}
-          />
-        ))}
+        {filteredChats.length !== 0 ? (
+          filteredChats.map((chat) => (
+            <ChatListItem
+              key={chat._id}
+              chat={chat}
+              onDelete={handleDeleteChat}
+            />
+          ))
+        ) : (
+          <div className={styles.select}>
+            You haven`t started any chats. Click the + button to create one.
+          </div>
+        )}
       </ul>
     </div>
   );
