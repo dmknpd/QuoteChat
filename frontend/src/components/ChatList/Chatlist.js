@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getChats, deleteChat } from "../../api/api";
+import { fetchChats, removeChat } from "../../store/chatSlice";
 
 import styles from "./ChatList.module.css";
 import ChatListItem from "../ChatListItem/ChatListItem";
 
 function ChatList({ searchQuery }) {
-  const [chats, setChats] = useState([]);
+  const dispatch = useDispatch();
+  const chats = useSelector((state) => state.chat.chats);
+  const chatStatus = useSelector((state) => state.chat.status);
 
-  const fetchChats = async () => {
+  const handleFetchChats = async () => {
     try {
-      const response = await getChats();
-      setChats(response.data);
+      await dispatch(fetchChats()).unwrap();
     } catch (error) {
       console.error("Error fetching chats:", error);
       toast.error("Error fetching chats.");
@@ -25,8 +27,7 @@ function ChatList({ searchQuery }) {
     }
 
     try {
-      await deleteChat(chatId);
-      setChats((prev) => prev.filter((chat) => chat._id !== chatId));
+      await dispatch(removeChat(chatId)).unwrap();
       toast.success("Chat successfully deleted!");
     } catch (error) {
       console.error("Error deleting chat", error);
@@ -40,8 +41,10 @@ function ChatList({ searchQuery }) {
   });
 
   useEffect(() => {
-    fetchChats();
-  }, []);
+    if (chatStatus === "idle") {
+      handleFetchChats();
+    }
+  }, [chatStatus]);
 
   return (
     <div className={styles.container}>
@@ -57,7 +60,7 @@ function ChatList({ searchQuery }) {
           ))
         ) : (
           <div className={styles.select}>
-            You haven`t started any chats. Click the + button to create one.
+            No chats found. Click the + button to create one.
           </div>
         )}
       </ul>

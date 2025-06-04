@@ -1,15 +1,18 @@
-import { useContext } from "react";
+import { useDispatch } from "react-redux";
 
-import { chatContext } from "../../context/ChatContext";
+import { setSelectedChat } from "../../store/chatSlice";
 
 import styles from "./ChatListItem.module.css";
 import user_icon from "../../img/user_icon.svg";
 import close_icon from "../../img/close_icon.svg";
 
 function ChatListItem({ chat, onDelete }) {
-  const { setSelectedChat } = useContext(chatContext);
+  const dispatch = useDispatch();
   return (
-    <li className={styles.container} onClick={() => setSelectedChat(chat)}>
+    <li
+      className={styles.container}
+      onClick={() => dispatch(setSelectedChat(chat))}
+    >
       <img src={user_icon} alt="user_icon" className={styles.user_icon} />
       <div className={styles.content}>
         <div className={styles.name}>

@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-import { createChat } from "../../api/api";
+import { createNewChat } from "../../store/chatSlice";
 
 import styles from "./Sidebar.module.css";
 import user_icon from "../../img/user_icon.svg";
@@ -11,12 +12,13 @@ import ChatList from "../ChatList/ChatList";
 import NewChatModal from "../NewChatModal/NewChatModal";
 
 function Sidebar() {
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCreateNewChat = async (data) => {
     try {
-      const response = await createChat(data);
+      await dispatch(createNewChat(data)).unwrap();
 
       toast.success(`Created chat with ${data.firstName} ${data.lastName}.`);
     } catch (error) {

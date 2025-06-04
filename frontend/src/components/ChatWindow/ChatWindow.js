@@ -1,35 +1,36 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getMessages } from "../../api/api";
-import { chatContext } from "../../context/ChatContext";
+import { fetchMessages, sendNewMessage } from "../../store/messageSlice";
+
 import MessageItem from "../MessageItem/MessageItem";
 
 import styles from "./ChatWindow.module.css";
 import user_icon from "../../img/user_icon.svg";
 
 function ChatWindow() {
-  const { selectedChat } = useContext(chatContext);
-  const [messages, setMessages] = useState([]);
+  const dispatch = useDispatch();
+  const selectedChat = useSelector((state) => state.chat.selectedChat);
+  const messages = useSelector((state) => state.message.messages);
+  const messageStatus = useSelector((state) => state.message.status);
+  const [newMessageText, setNewMessageText] = useState("");
 
   const messagesEndRef = useRef(null);
 
-  const fetchChatMessages = async () => {
+  const handleFetchMessages = async () => {
     if (selectedChat) {
       try {
-        const response = await getMessages(selectedChat._id);
-        setMessages(response.data);
+        await dispatch(fetchMessages(selectedChat._id)).unwrap();
       } catch (error) {
         console.error("Error fetching messages:", error);
         toast.error("Error fetching messages.");
       }
-    } else {
-      setMessages([]);
     }
   };
 
   useEffect(() => {
-    fetchChatMessages();
+    handleFetchMessages();
   }, [selectedChat]);
 
   useEffect(() => {
