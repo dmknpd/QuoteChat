@@ -21,6 +21,16 @@ function ChatList({ searchQuery }) {
     }
   };
 
+  const handleEditChat = async (chatId) => {
+    try {
+      await dispatch(removeChat(chatId)).unwrap();
+      toast.success("Chat successfully edited!");
+    } catch (error) {
+      console.error("Error edited chat", error);
+      toast.error("Error edited chat.");
+    }
+  };
+
   const handleDeleteChat = async (chatId) => {
     if (!window.confirm("Do you want to delete this chat?")) {
       return;
@@ -51,7 +61,7 @@ function ChatList({ searchQuery }) {
       <ul className={styles.chat_list}>
         {chatStatus === "loading" && (
           <div className={styles.select}>
-            <div class="loader"></div>
+            <div className="loader"></div>
           </div>
         )}
         {chatStatus === "succeeded" && filteredChats.length !== 0 ? (

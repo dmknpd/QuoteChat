@@ -5,8 +5,8 @@ function MessageItem({ message }) {
   return (
     <li className={`${styles.message} ${styles[sender]}`}>
       <div className={styles.message_container}>
-        <div className={styles.content}>{message.text}</div>
-        <div className={styles.date}>
+        <p className={styles.content}>{message.text}</p>
+        <p className={styles.date}>
           {new Date(message.updatedAt).toLocaleString("en-US", {
             month: "numeric",
             day: "numeric",
@@ -15,7 +15,7 @@ function MessageItem({ message }) {
             minute: "2-digit",
             hour12: true,
           })}
-        </div>
+        </p>
       </div>
     </li>
   );

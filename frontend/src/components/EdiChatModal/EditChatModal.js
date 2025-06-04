@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { createNewChat, setNewChatErrors } from "../../store/chatSlice";
+import { createNewChat, setNewChatErrorsNull } from "../../store/chatSlice";
 
-import styles from "./NewChatModal.module.css";
+import styles from "./EditChatModal.module.css";
 
-function NewChatModal({ onClose }) {
+function EditChatModal({ onClose }) {
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -14,52 +14,21 @@ function NewChatModal({ onClose }) {
 
   const handleCreateNewChat = async (event) => {
     event.preventDefault();
-
-    dispatch(setNewChatErrors(null));
-
-    const trimmedFirstName = firstName.trim();
-    const trimmedLastName = lastName.trim();
-
-    const errors = {};
-    if (trimmedFirstName.length === 0) {
-      errors.firstName = "First name is required.";
-    } else if (trimmedFirstName.length < 3) {
-      errors.firstName = "First name must be at least 3 characters.";
-    } else if (trimmedFirstName.length > 20) {
-      errors.firstName = "First name must be no more than 20 characters.";
-    }
-
-    if (trimmedLastName.length === 0) {
-      errors.lastName = "Last name is required.";
-    } else if (trimmedLastName.length < 3) {
-      errors.lastName = "Last name must be at least 3 characters.";
-    } else if (trimmedLastName.length > 20) {
-      errors.lastName = "Last name must be no more than 20 characters.";
-    }
-
-    if (Object.keys(errors).length > 0) {
-      dispatch(setNewChatErrors(errors));
-      return;
-    }
-
     try {
       await dispatch(createNewChat({ firstName, lastName })).unwrap();
-
-      setFirstName("");
-      setLastName("");
 
       toast.success(`Created chat with ${firstName} ${lastName}.`);
       onClose();
     } catch (error) {
-      console.error("Error creating chat:", error);
+      console.error("Error creating chat", error);
       toast.error("Error creating chat.");
     }
   };
 
+  //VALIDATION
+
   const handleOnClose = () => {
-    setFirstName("");
-    setLastName("");
-    dispatch(setNewChatErrors(null));
+    dispatch(setNewChatErrorsNull());
     onClose();
   };
 
@@ -119,4 +88,4 @@ function NewChatModal({ onClose }) {
   );
 }
 
-export default NewChatModal;
+export default EditChatModal;

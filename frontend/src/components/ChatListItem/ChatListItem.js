@@ -15,10 +15,10 @@ function ChatListItem({ chat, onDelete }) {
     >
       <img src={user_icon} alt="user_icon" className={styles.user_icon} />
       <div className={styles.content}>
-        <div className={styles.name}>
+        <p className={styles.name}>
           {chat.firstName} {chat.lastName}
-        </div>
-        <div className={styles.message}>{chat?.lastMessage?.text || ""}</div>
+        </p>
+        <p className={styles.message}>{chat?.lastMessage?.text || ""}</p>
       </div>
 
       <div className={styles.date}>

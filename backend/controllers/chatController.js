@@ -1,3 +1,6 @@
+const chatSchema = require("../validators/chatValidator");
+const formatErrors = require("../utils/formatErrors");
+
 const Chat = require("../models/chat");
 const Message = require("../models/message");
 
@@ -29,15 +32,18 @@ exports.getAllChats = async (req, res) => {
 
 exports.createChat = async (req, res) => {
   const { firstName, lastName } = req.body;
+  const { error } = chatSchema.validate(
+    { firstName, lastName },
+    { abortEarly: false }
+  );
 
-  if (!firstName || !lastName) {
-    return res
-      .status(404)
-      .json({ error: "First name and last name are required" });
+  if (error) {
+    const errors = formatErrors(error);
+    return res.status(400).json({ errors });
   }
 
-  const newChat = new Chat({ firstName, lastName });
   try {
+    const newChat = new Chat({ firstName, lastName });
     const savedChat = await newChat.save();
     res.status(201).json(savedChat);
   } catch (error) {

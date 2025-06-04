@@ -8,9 +8,16 @@ export const fetchChats = createAsyncThunk("chat/fetchChats", async () => {
 
 export const createNewChat = createAsyncThunk(
   "chat/createNewChat",
-  async (chatData) => {
-    const response = await createChat(chatData);
-    return response.data;
+  async (chatData, { rejectWithValue }) => {
+    try {
+      const response = await createChat(chatData);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return rejectWithValue(error.response.data.errors);
+      }
+      return rejectWithValue({ error: error.message });
+    }
   }
 );
 
@@ -29,10 +36,14 @@ const chatSlice = createSlice({
     selectedChat: null,
     status: "idle",
     error: null,
+    newChatErrors: null,
   },
   reducers: {
     setSelectedChat: (state, action) => {
       state.selectedChat = action.payload;
+    },
+    setNewChatErrors: (state, action) => {
+      state.newChatErrors = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -53,10 +64,10 @@ const chatSlice = createSlice({
       //createNewChat
       .addCase(createNewChat.fulfilled, (state, action) => {
         state.chats.push(action.payload);
-        state.error = null;
+        state.newChatErrors = null;
       })
       .addCase(createNewChat.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.newChatErrors = action.payload;
       })
       //removeChat
       .addCase(removeChat.fulfilled, (state, action) => {
@@ -72,5 +83,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setSelectedChat } = chatSlice.actions;
+export const { setSelectedChat, setNewChatErrors } = chatSlice.actions;
 export default chatSlice.reducer;

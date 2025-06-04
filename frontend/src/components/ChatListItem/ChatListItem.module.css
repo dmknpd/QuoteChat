@@ -31,6 +31,21 @@
 .name {
 }
 
+.container:hover .name::after {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background-image: url("../../img/pencil_icon.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 5px;
+  position: absolute;
+  top: 18px;
+  opacity: 70%;
+}
+
 .message {
   color: var(--secondary-text-color);
   font-size: 0.9rem;
@@ -57,7 +72,7 @@
   position: absolute;
   width: 25px;
   right: 1%;
-  bottom: 15%;
+  bottom: 10%;
   border: none;
   background: none;
   opacity: 60%;

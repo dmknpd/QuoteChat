@@ -1,8 +1,4 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-
-import { createNewChat } from "../../store/chatSlice";
 
 import styles from "./Sidebar.module.css";
 import user_icon from "../../img/user_icon.svg";
@@ -12,20 +8,8 @@ import ChatList from "../ChatList/ChatList";
 import NewChatModal from "../NewChatModal/NewChatModal";
 
 function Sidebar() {
-  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleCreateNewChat = async (data) => {
-    try {
-      await dispatch(createNewChat(data)).unwrap();
-
-      toast.success(`Created chat with ${data.firstName} ${data.lastName}.`);
-    } catch (error) {
-      console.error("Error creating chat", error);
-      toast.error("Error creating chat.");
-    }
-  };
 
   return (
     <div className={styles.main}>
@@ -50,12 +34,7 @@ function Sidebar() {
       </div>
       <h3 className={styles.title}>Chats</h3>
       <ChatList searchQuery={searchQuery} />
-      {isModalOpen && (
-        <NewChatModal
-          onClose={() => setIsModalOpen(false)}
-          onCreateChat={handleCreateNewChat}
-        />
-      )}
+      {isModalOpen && <NewChatModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }
