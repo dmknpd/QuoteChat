@@ -13,7 +13,7 @@ function ChatWindow() {
   const dispatch = useDispatch();
   const selectedChat = useSelector((state) => state.chat.selectedChat);
   const messages = useSelector((state) => state.message.messages);
-  const messageStatus = useSelector((state) => state.message.status);
+  const messagesStatus = useSelector((state) => state.message.status);
   const [newMessageText, setNewMessageText] = useState("");
 
   const messagesEndRef = useRef(null);
@@ -30,7 +30,9 @@ function ChatWindow() {
   };
 
   useEffect(() => {
-    handleFetchMessages();
+    if (selectedChat) {
+      handleFetchMessages();
+    }
   }, [selectedChat]);
 
   useEffect(() => {
@@ -52,14 +54,16 @@ function ChatWindow() {
         )}
       </div>
       <ul className={styles.main} ref={messagesEndRef}>
-        {selectedChat ? (
-          messages.length === 0 ? (
-            <div className={styles.select}>No messages in this chat yet.</div>
-          ) : (
-            messages.map((msg) => <MessageItem key={msg._id} message={msg} />)
-          )
-        ) : (
+        {!selectedChat ? (
           <div className={styles.select}>Select a chat to start messaging.</div>
+        ) : messagesStatus === "loading" ? (
+          <div className={styles.select}>
+            <div className="loader"></div>
+          </div>
+        ) : messages.length === 0 ? (
+          <div className={styles.select}>No messages in this chat yet.</div>
+        ) : (
+          messages.map((msg) => <MessageItem key={msg._id} message={msg} />)
         )}
       </ul>
       <div className={styles.footer}>
@@ -70,6 +74,7 @@ function ChatWindow() {
               className={styles.input}
               type="text"
               placeholder="Type your message"
+              disabled={messagesStatus === "loading"}
             />
           </>
         )}

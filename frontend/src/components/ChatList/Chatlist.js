@@ -48,9 +48,13 @@ function ChatList({ searchQuery }) {
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Chats</h3>
       <ul className={styles.chat_list}>
-        {filteredChats.length !== 0 ? (
+        {chatStatus === "loading" && (
+          <div className={styles.select}>
+            <div class="loader"></div>
+          </div>
+        )}
+        {chatStatus === "succeeded" && filteredChats.length !== 0 ? (
           filteredChats.map((chat) => (
             <ChatListItem
               key={chat._id}

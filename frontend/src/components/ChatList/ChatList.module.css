@@ -1,12 +1,9 @@
 .container {
   flex-grow: 1;
-}
-
-.title {
-  color: var(--accent-color);
-  margin-left: 20px;
-  font-weight: 500;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
 }
 
 .chat_list {
@@ -14,10 +11,10 @@
 }
 
 .select {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-
   color: var(--secondary-text-color);
+  min-height: 200px; /* или 100% если родитель позволяет */
 }

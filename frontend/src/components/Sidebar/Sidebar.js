@@ -48,6 +48,7 @@ function Sidebar() {
           />
         </div>
       </div>
+      <h3 className={styles.title}>Chats</h3>
       <ChatList searchQuery={searchQuery} />
       {isModalOpen && (
         <NewChatModal
