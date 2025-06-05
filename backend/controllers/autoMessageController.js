@@ -36,6 +36,12 @@ const startAutoSending = async (io) => {
         chat: randomChat,
       });
 
+      const chatWithLastMessage = {
+        chatId: randomChat._id,
+        lastMessage: savedAutoMessage,
+      };
+      io.emit("updateLastMessage", chatWithLastMessage);
+
       console.log(
         `Auto-message sent to chat: ${randomChat.firstName} ${randomChat.lastName}`
       );
