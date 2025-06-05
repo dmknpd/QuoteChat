@@ -30,14 +30,14 @@ const startAutoSending = async (io) => {
       await Chat.findByIdAndUpdate(randomChat._id, { updatedAt: Date.now() });
 
       io.to(randomChat._id.toString()).emit("newMessage", savedAutoMessage);
+      io.emit("newAutoMessage", {
+        ...savedAutoMessage.toObject(),
+        chat: randomChat,
+      });
 
-      // io.emit("autoMessageNotification", {
-      //   chatId: randomChat._id,
-      //   chatName: `${randomChat.firstName} ${randomChat.lastName}`,
-      //   message: savedAutoMessage,
-      // });
-
-      console.log(`Auto-message sent to chat: ${randomChat.firstName}`);
+      console.log(
+        `Auto-message sent to chat: ${randomChat.firstName} ${randomChat.lastName}`
+      );
     } catch (error) {
       console.error("Error during auto-sending:", error);
     }

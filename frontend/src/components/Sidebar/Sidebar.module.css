@@ -89,8 +89,28 @@
   background-image: url("../../img/plus_icon.svg");
 }
 
+.title_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
 .title {
   color: var(--accent-color);
-  margin-left: 20px;
   font-weight: 500;
+}
+
+.auto_sender {
+  padding: 5px;
+  background-color: transparent;
+  border: 1px solid var(--secondary-color);
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--main-text-color);
+}
+
+.auto_sender:hover {
+  background-color: var(--main-color);
 }

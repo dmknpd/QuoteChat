@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import { setSearchQuery } from "../../store/chatSlice";
+import { toggleAutoSender } from "../../api/api";
 
 import styles from "./Sidebar.module.css";
 import user_icon from "../../img/user_icon.svg";
@@ -13,6 +15,7 @@ import ChatModal from "../ChatModal/ChatModal";
 function Sidebar() {
   const dispatch = useDispatch();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isAutoSending, setIsAutoSending] = useState(false);
 
   const handleModalOpen = (event) => {
     event.preventDefault();
@@ -21,6 +24,18 @@ function Sidebar() {
 
   const handleSearch = (event) => {
     dispatch(setSearchQuery(event.target.value.trim()));
+  };
+
+  const handleToggleAutoSender = async () => {
+    try {
+      const newState = !isAutoSending;
+      await toggleAutoSender(newState);
+      setIsAutoSending(newState);
+      toast.success(`Auto-sender ${newState ? "enabled" : "disabled"}!`);
+    } catch (error) {
+      console.error("Error toggling auto-sender", error);
+      toast.error("Could not change auto-sender state.");
+    }
   };
 
   return (
@@ -41,7 +56,18 @@ function Sidebar() {
           />
         </div>
       </div>
-      <h3 className={styles.title}>Chats</h3>
+
+      <div className={styles.title_container}>
+        <h3 className={styles.title}>Chats</h3>
+        <button
+          onClick={handleToggleAutoSender}
+          className={`${styles.auto_sender} ${
+            isAutoSending ? styles.active : ""
+          }`}
+        >
+          {isAutoSending ? "Stop Auto-Sender" : "Start Auto-Sender"}
+        </button>
+      </div>
       <ChatList />
       {isCreateModalOpen && (
         <ChatModal onClose={() => setIsCreateModalOpen(false)} />

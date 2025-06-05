@@ -53,7 +53,6 @@ exports.sendMessage = async (req, res) => {
         const quote = await getRandomQuote();
 
         const chat = await Chat.findById(chatId);
-        const botFullName = `${chat.firstName} ${chat.lastName}`;
 
         const autoMessage = new Message({
           chatId,

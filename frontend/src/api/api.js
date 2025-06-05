@@ -10,3 +10,6 @@ export const deleteChat = (id) => Api.delete(`/${id}`);
 export const getMessages = (chatId) => Api.get(`/${chatId}/messages`);
 export const sendMessage = (chatId, data) =>
   Api.post(`/${chatId}/messages`, data);
+
+export const toggleAutoSender = (enabled) =>
+  Api.post("/auto-messages", { enabled });

@@ -30,8 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/chats", [chatRoutes, messageRoutes]);
-app.use("/api/auto-messages", autoMessageRoutes);
+app.use("/api/chats", [chatRoutes, messageRoutes, autoMessageRoutes]);
 
 mongoose
   .connect(MONGO_URI)

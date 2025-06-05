@@ -3,6 +3,6 @@ const router = express.Router();
 
 const autoMessageController = require("../controllers/autoMessageController");
 
-router.post("/", autoMessageController.toggleAutoSender);
+router.post("/auto-messages", autoMessageController.toggleAutoSender);
 
 module.exports = router;
