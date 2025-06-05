@@ -14,9 +14,8 @@ function ChatWindow() {
   const selectedChat = useSelector((state) => state.chat.selectedChat);
   const messages = useSelector((state) => state.message.messages);
   const messagesStatus = useSelector((state) => state.message.status);
+  const messageError = useSelector((state) => state.message.error);
   const [newMessageText, setNewMessageText] = useState("");
-
-  const messagesEndRef = useRef(null);
 
   const handleFetchMessages = async () => {
     if (selectedChat) {
@@ -29,17 +28,63 @@ function ChatWindow() {
     }
   };
 
+  const handleSendMessage = async () => {
+    if (!newMessageText.trim() || !selectedChat) {
+      return;
+    }
+
+    try {
+      await dispatch(
+        sendNewMessage({
+          chatId: selectedChat._id,
+          messageText: { text: newMessageText },
+        })
+      ).unwrap();
+      setNewMessageText("");
+      toast.success("Message sent.");
+    } catch (error) {
+      console.error("Error sending message", error);
+      toast.error("Error sending message.");
+    }
+  };
+
+  const handleEnterKeyPress = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   useEffect(() => {
     if (selectedChat) {
       handleFetchMessages();
     }
   }, [selectedChat]);
 
+  const messagesEndRef = useRef(null);
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const textAreaRef = useRef(null);
+
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+
+      const newHeight = Math.min(textAreaRef.current.scrollHeight, 150);
+      textAreaRef.current.style.height = `${newHeight}px`;
+    }
+  }, [newMessageText]);
+
+  useEffect(() => {
+    if (selectedChat) {
+      setNewMessageText("");
+    }
+  }, [selectedChat]);
 
   return (
     <div className={styles.container}>
@@ -69,12 +114,16 @@ function ChatWindow() {
       <div className={styles.footer}>
         {selectedChat && (
           <>
-            <button className={styles.send_icon} />
-            <input
+            <button className={styles.send_icon} onClick={handleSendMessage} />
+            <textarea
+              ref={textAreaRef}
               className={styles.input}
-              type="text"
               placeholder="Type your message"
               disabled={messagesStatus === "loading"}
+              value={newMessageText}
+              onChange={(event) => setNewMessageText(event.target.value)}
+              onKeyDown={handleEnterKeyPress}
+              rows={1}
             />
           </>
         )}

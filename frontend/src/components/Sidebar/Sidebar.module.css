@@ -1,7 +1,7 @@
 .main {
   display: flex;
   flex-direction: column;
-  width: 35%;
+  min-width: 35%;
   gap: 25px;
 }
 
@@ -54,7 +54,7 @@
   height: 35px;
   border: 1px solid var(--secondary-color);
   outline: none;
-  padding: 5px 30px;
+  padding: 5px 40px 5px 30px;
 }
 
 .lens_icon {

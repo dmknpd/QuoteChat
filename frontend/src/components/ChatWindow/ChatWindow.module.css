@@ -54,15 +54,21 @@
 .input {
   width: 100%;
   border-radius: 15px;
-  height: 40px;
+  min-height: 40px;
+  max-height: 150px;
   border: 1px solid var(--secondary-color);
   outline: none;
-  padding: 5px 15px;
+  padding: 8px 40px 8px 30px;
+  resize: none;
+  line-height: 1.5;
+  font-size: 1rem;
+
+  scrollbar-width: none;
 }
 
 .send_icon {
   position: absolute;
-  right: 35px;
+  right: 30px;
   top: 50%;
   transform: translateY(-50%);
   width: 25px;
