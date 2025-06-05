@@ -17,6 +17,7 @@ import {
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ChatWindow from "./components/ChatWindow/ChatWindow";
+const notificationSound = new Audio("/sounds/notification.mp3");
 
 function App() {
   const dispatch = useDispatch();
@@ -65,6 +66,10 @@ function App() {
           },
         }
       );
+
+      notificationSound.play().catch((e) => {
+        console.warn("Failed to play notification sound", e);
+      });
     });
 
     socket.on("updateLastMessage", (data) => {
