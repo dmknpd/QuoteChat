@@ -5,7 +5,7 @@ async function getRandomQuote() {
     const quoteResponse = await axios.get(
       "https://stoic.tekloon.net/stoic-quote"
     );
-    const quote = quoteResponse.data.data.quote;
+    let quote = quoteResponse.data.data.quote;
 
     if (quote.endsWith("@")) {
       quote = quote.slice(0, -1).trim();
