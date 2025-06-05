@@ -2,29 +2,48 @@ const chatSchema = require("../validators/chatValidator");
 const formatErrors = require("../utils/formatErrors");
 
 const Chat = require("../models/chat");
-const Message = require("../models/message");
 
 exports.getAllChats = async (req, res) => {
   try {
-    const chats = await Chat.find()
-      .sort({ createdAt: 1 })
-      .select("-__v")
-      .lean();
+    const chats = await Chat.aggregate([
+      {
+        $lookup: {
+          from: "messages",
+          let: { chatId: "$_id" },
+          pipeline: [
+            { $match: { $expr: { $eq: ["$chatId", "$$chatId"] } } },
+            { $sort: { createdAt: -1 } },
+            { $limit: 1 },
+            { $project: { __v: 0, chatId: 0 } },
+          ],
+          as: "lastMessage",
+        },
+      },
+      {
+        $unwind: {
+          path: "$lastMessage",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $addFields: {
+          lastMessageDate: "$lastMessage.createdAt",
+        },
+      },
+      {
+        $sort: {
+          lastMessageDate: -1,
+        },
+      },
+      {
+        $project: {
+          __v: 0,
+          lastMessageDate: 0,
+        },
+      },
+    ]);
 
-    const chatsWithLastMessage = await Promise.all(
-      chats.map(async (chat) => {
-        const lastMessage = await Message.findOne({ chatId: chat._id })
-          .sort({ createdAt: -1 })
-          .select("-__v -chatId");
-
-        return {
-          ...chat,
-          lastMessage: lastMessage || null,
-        };
-      })
-    );
-
-    res.status(200).json(chatsWithLastMessage);
+    res.status(200).json(chats);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

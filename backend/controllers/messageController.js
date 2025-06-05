@@ -74,7 +74,7 @@ exports.deleteMessage = async (req, res) => {
 
   try {
     const message = await Message.findById(id);
-    if (!chat) {
+    if (!message) {
       return res.status(404).json({ message: "Message not found" });
     }
 
