@@ -7,10 +7,11 @@ import { fetchChats, removeChat } from "../../store/chatSlice";
 import styles from "./ChatList.module.css";
 import ChatListItem from "../ChatListItem/ChatListItem";
 
-function ChatList({ searchQuery }) {
+function ChatList() {
   const dispatch = useDispatch();
   const chats = useSelector((state) => state.chat.chats);
   const chatStatus = useSelector((state) => state.chat.status);
+  const searchQuery = useSelector((state) => state.chat.searchQuery);
 
   const handleFetchChats = async () => {
     try {

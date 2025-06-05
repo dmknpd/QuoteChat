@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { setSearchQuery } from "../../store/chatSlice";
 
 import styles from "./Sidebar.module.css";
 import user_icon from "../../img/user_icon.svg";
@@ -8,12 +11,16 @@ import ChatList from "../ChatList/ChatList";
 import ChatModal from "../ChatModal/ChatModal";
 
 function Sidebar() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const dispatch = useDispatch();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const handleModalOpen = (event) => {
     event.preventDefault();
     setIsCreateModalOpen(true);
+  };
+
+  const handleSearch = (event) => {
+    dispatch(setSearchQuery(event.target.value.trim()));
   };
 
   return (
@@ -30,12 +37,12 @@ function Sidebar() {
             className={styles.search}
             type="text"
             placeholder="Search or start new chat"
-            onChange={(e) => setSearchQuery(e.target.value.trim())}
+            onChange={handleSearch}
           />
         </div>
       </div>
       <h3 className={styles.title}>Chats</h3>
-      <ChatList searchQuery={searchQuery} />
+      <ChatList />
       {isCreateModalOpen && (
         <ChatModal onClose={() => setIsCreateModalOpen(false)} />
       )}

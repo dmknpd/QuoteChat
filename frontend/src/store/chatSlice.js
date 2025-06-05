@@ -52,6 +52,7 @@ const chatSlice = createSlice({
     status: "idle",
     error: null,
     chatModalErrors: null,
+    searchQuery: "",
   },
   reducers: {
     setSelectedChat: (state, action) => {
@@ -59,6 +60,9 @@ const chatSlice = createSlice({
     },
     setChatModalErrors: (state, action) => {
       state.chatModalErrors = action.payload;
+    },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -115,5 +119,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setSelectedChat, setChatModalErrors } = chatSlice.actions;
+export const { setSelectedChat, setChatModalErrors, setSearchQuery } =
+  chatSlice.actions;
 export default chatSlice.reducer;
