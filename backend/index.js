@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const http = require("http");
+const path = require("path");
 const { Server } = require("socket.io");
 
 const chatRoutes = require("./routes/chatRoutes");
@@ -56,6 +57,12 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log(`User ${socket.id} disconnected`);
   });
+});
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (_, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
 });
 
 server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
