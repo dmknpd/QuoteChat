@@ -22,6 +22,33 @@
   height: 40px;
 }
 
+.update {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  left: -10px;
+  bottom: 2px;
+
+  background-image: url("../../img/pencil_icon.svg");
+  background-size: cover;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.update:hover {
+  border: 1px solid var(--secondary-color);
+  border-radius: 3px;
+}
+
+.header:hover .update {
+  opacity: 0.8;
+}
+
 .main {
   background-color: #faf8f9;
   flex-grow: 1;
@@ -58,7 +85,7 @@
   max-height: 150px;
   border: 1px solid var(--secondary-color);
   outline: none;
-  padding: 8px 40px 8px 30px;
+  padding: 8px 40px 8px 20px;
   resize: none;
   line-height: 1.5;
   font-size: 1rem;

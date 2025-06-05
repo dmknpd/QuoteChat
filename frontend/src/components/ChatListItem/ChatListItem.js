@@ -10,7 +10,7 @@ import ChatModal from "../ChatModal/ChatModal";
 
 function ChatListItem({ chat, onDelete }) {
   const dispatch = useDispatch();
-  const [isEdiModalOpen, setIsEdiModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEdiModalOpen] = useState(false);
 
   const handleEditModalOpen = (event) => {
     event.preventDefault();
@@ -55,7 +55,7 @@ function ChatListItem({ chat, onDelete }) {
         />
       </li>
 
-      {isEdiModalOpen && (
+      {isEditModalOpen && (
         <ChatModal
           onClose={() => setIsEdiModalOpen(false)}
           isEdit={true}

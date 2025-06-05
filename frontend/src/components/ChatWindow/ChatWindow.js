@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { fetchMessages, sendNewMessage } from "../../store/messageSlice";
 
 import MessageItem from "../MessageItem/MessageItem";
+import ChatModal from "../ChatModal/ChatModal";
 
 import styles from "./ChatWindow.module.css";
 import user_icon from "../../img/user_icon.svg";
@@ -14,8 +15,13 @@ function ChatWindow() {
   const selectedChat = useSelector((state) => state.chat.selectedChat);
   const messages = useSelector((state) => state.message.messages);
   const messagesStatus = useSelector((state) => state.message.status);
-  const messageError = useSelector((state) => state.message.error);
   const [newMessageText, setNewMessageText] = useState("");
+  const [isEditModalOpen, setIsEdiModalOpen] = useState(false);
+
+  const handleEditModalOpen = (event) => {
+    event.preventDefault();
+    setIsEdiModalOpen(true);
+  };
 
   const handleFetchMessages = async () => {
     if (selectedChat) {
@@ -95,6 +101,10 @@ function ChatWindow() {
             <h4 className={styles.chat_name}>
               {selectedChat.firstName} {selectedChat.lastName}
             </h4>
+            <button
+              className={styles.update}
+              onClick={handleEditModalOpen}
+            ></button>
           </>
         )}
       </div>
@@ -128,6 +138,13 @@ function ChatWindow() {
           </>
         )}
       </div>
+      {isEditModalOpen && (
+        <ChatModal
+          onClose={() => setIsEdiModalOpen(false)}
+          isEdit={true}
+          chat={selectedChat}
+        />
+      )}
     </div>
   );
 }
