@@ -56,7 +56,12 @@ const chatSlice = createSlice({
   },
   reducers: {
     setSelectedChat: (state, action) => {
-      state.selectedChat = action.payload;
+      if (
+        !state.selectedChat ||
+        state.selectedChat._id !== action.payload._id
+      ) {
+        state.selectedChat = action.payload;
+      }
     },
     setChatModalErrors: (state, action) => {
       state.chatModalErrors = action.payload;

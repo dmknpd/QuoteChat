@@ -11,6 +11,7 @@ import {
   deleteChatFromList,
   updateChatInList,
   updateLastMessage,
+  setSelectedChat,
 } from "./store/chatSlice";
 
 import "./App.css";
@@ -40,8 +41,30 @@ function App() {
       dispatch(deleteChatFromList(chatId));
     });
 
-    socket.on("newMessage", (message) => {
-      console.log(message);
+    socket.on("newAutoMessage", (message) => {
+      const { text, chat } = message;
+      const senderFullName = `${chat.firstName} ${chat.lastName}`;
+
+      toast(
+        <div className="toast_message">
+          <strong className="toast_message__sender">{senderFullName}</strong>
+          <span className="toast_message__text">{text}</span>
+        </div>,
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          className: "custom_toast_container",
+          onClick: () => {
+            dispatch(setSelectedChat(chat));
+          },
+        }
+      );
     });
 
     socket.on("updateLastMessage", (data) => {
@@ -60,7 +83,7 @@ function App() {
       socket.off("chatDeleted");
       socket.off("updateLastMessage");
     };
-  }, [dispatch, chatStatus]);
+  }, []);
 
   return (
     <div className="App">

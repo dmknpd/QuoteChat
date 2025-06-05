@@ -41,6 +41,9 @@ mongoose
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
 
+  const clients = Array.from(io.sockets.sockets.keys());
+  console.log("Active clients:", clients.length);
+
   socket.on("joinChat", (chatId) => {
     socket.join(chatId);
     console.log(`User ${socket.id} join chat: ${chatId}`);

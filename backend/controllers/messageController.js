@@ -1,6 +1,8 @@
 const axios = require("axios");
 
 const Message = require("../models/message");
+const Chat = require("../models/chat");
+
 const getRandomQuote = require("../utils/quoteUtils");
 
 exports.getChatMessages = async (req, res) => {
@@ -50,6 +52,9 @@ exports.sendMessage = async (req, res) => {
       try {
         const quote = await getRandomQuote();
 
+        const chat = await Chat.findById(chatId);
+        const botFullName = `${chat.firstName} ${chat.lastName}`;
+
         const autoMessage = new Message({
           chatId,
           sender: "auto",
@@ -59,6 +64,11 @@ exports.sendMessage = async (req, res) => {
         const savedAutoMessage = await autoMessage.save();
 
         io.to(chatId).emit("newMessage", savedAutoMessage);
+        io.emit("newMessage", savedAutoMessage);
+        io.emit("newAutoMessage", {
+          ...savedAutoMessage.toObject(),
+          chat,
+        });
 
         const chatWithLastMessage = { chatId, lastMessage: savedAutoMessage };
         io.emit("updateLastMessage", chatWithLastMessage);

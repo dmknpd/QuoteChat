@@ -3,3 +3,30 @@ main {
   flex-direction: row;
   height: 100vh;
 }
+
+.custom_toast_container {
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  padding: 10px;
+}
+
+.toast_message {
+  padding: 5px;
+}
+
+.toast_message__sender {
+  display: block;
+  margin-bottom: 5px;
+  color: rgb(49, 206, 203);
+}
+
+.toast_message__text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9em;
+}

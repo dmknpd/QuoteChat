@@ -49,7 +49,6 @@ function ChatWindow() {
         })
       ).unwrap();
       setNewMessageText("");
-      toast.success("Message sent.");
     } catch (error) {
       console.error("Error sending message", error);
       toast.error("Error sending message.");
