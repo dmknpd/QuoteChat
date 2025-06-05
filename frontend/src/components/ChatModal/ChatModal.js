@@ -88,8 +88,11 @@ function ChatModal({ onClose, isEdit = false, chat = null }) {
   };
 
   return (
-    <div className={styles.modal}>
-      <div className={styles.content}>
+    <div className={styles.modal} onClick={handleOnClose}>
+      <div
+        className={styles.content}
+        onClick={(event) => event.stopPropagation()}
+      >
         <h2 className={styles.title}>
           {" "}
           {isEdit ? "Edit Chat" : "Create New Chat"}
