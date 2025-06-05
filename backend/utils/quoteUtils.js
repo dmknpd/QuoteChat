@@ -7,6 +7,10 @@ async function getRandomQuote() {
     );
     const quote = quoteResponse.data.data.quote;
 
+    if (quote.endsWith("@")) {
+      quote = quote.slice(0, -1).trim();
+    }
+
     return quote;
   } catch (error) {
     console.error("Error fetching quote: ", error.message);
