@@ -55,6 +55,7 @@ exports.createChat = async (req, res) => {
     { firstName, lastName },
     { abortEarly: false }
   );
+  const { io } = req;
 
   if (error) {
     const errors = formatErrors(error);
@@ -64,6 +65,9 @@ exports.createChat = async (req, res) => {
   try {
     const newChat = new Chat({ firstName, lastName });
     const savedChat = await newChat.save();
+
+    io.emit("newChat", savedChat);
+
     res.status(201).json(savedChat);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -77,6 +81,7 @@ exports.updateChat = async (req, res) => {
     { firstName, lastName },
     { abortEarly: false }
   );
+  const { io } = req;
 
   if (!id) {
     return res.status(400).json({ error: "Id param is required" });
@@ -101,6 +106,8 @@ exports.updateChat = async (req, res) => {
       return res.status(404).json({ message: "Chat not found" });
     }
 
+    io.emit("chatUpdated", updatedChat);
+
     res.status(200).json(updatedChat);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -109,9 +116,10 @@ exports.updateChat = async (req, res) => {
 
 exports.deleteChat = async (req, res) => {
   const { id } = req.params;
+  const { io } = req;
 
   if (!id) {
-    return res.status(404).json({ error: "Id param is required" });
+    return res.status(400).json({ error: "Id param is required" });
   }
 
   try {
@@ -121,6 +129,8 @@ exports.deleteChat = async (req, res) => {
     }
 
     await chat.deleteOne();
+
+    io.emit("chatDeleted", id);
 
     res.status(200).json({ message: "Chat deleted successfully" });
   } catch (error) {

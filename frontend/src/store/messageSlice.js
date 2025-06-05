@@ -24,7 +24,13 @@ const messageSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    addMessage: (state, action) => {
+      if (!state.messages.find((msg) => msg._id === action.payload._id)) {
+        state.messages.push(action.payload);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder //fetchMessages
       .addCase(fetchMessages.pending, (state) => {
@@ -42,7 +48,7 @@ const messageSlice = createSlice({
       })
       //sendNewMessage
       .addCase(sendNewMessage.fulfilled, (state, action) => {
-        state.messages.push(action.payload);
+        // state.messages.push(action.payload);
         state.error = null;
       })
       .addCase(sendNewMessage.rejected, (state, action) => {
@@ -51,4 +57,5 @@ const messageSlice = createSlice({
   },
 });
 
+export const { addMessage } = messageSlice.actions;
 export default messageSlice.reducer;

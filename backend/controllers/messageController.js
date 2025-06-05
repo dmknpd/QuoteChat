@@ -20,6 +20,7 @@ exports.getChatMessages = async (req, res) => {
 exports.sendMessage = async (req, res) => {
   const { chatId } = req.params;
   const { text } = req.body;
+  const { io } = req;
 
   if (!chatId) {
     return res.status(400).json({ error: "ChatId param is required" });
@@ -37,6 +38,12 @@ exports.sendMessage = async (req, res) => {
     });
 
     const savedUserMessage = await userMessage.save();
+
+    io.to(chatId).emit("newMessage", savedUserMessage);
+
+    const chatWithLastMessage = { chatId, lastMessage: savedUserMessage };
+    io.emit("updateLastMessage", chatWithLastMessage);
+
     res.status(200).json(savedUserMessage);
 
     setTimeout(async () => {
@@ -50,6 +57,12 @@ exports.sendMessage = async (req, res) => {
         });
 
         const savedAutoMessage = await autoMessage.save();
+
+        io.to(chatId).emit("newMessage", savedAutoMessage);
+
+        const chatWithLastMessage = { chatId, lastMessage: savedAutoMessage };
+        io.emit("updateLastMessage", chatWithLastMessage);
+
         console.log(`Auto-response sent to chat ${chatId}`);
       } catch (error) {
         const errorMessage = new Message({
@@ -58,6 +71,13 @@ exports.sendMessage = async (req, res) => {
           text: "Sorry, unable to retrieve quote.",
         });
         await errorMessage.save();
+
+        io.to(chatId).emit("newMessage", errorMessage);
+
+        const chatWithLastMessage = { chatId, lastMessage: errorMessage };
+        io.emit("updateLastMessage", chatWithLastMessage);
+
+        console.log(`Error response sent to chat ${chatId}`);
       }
     }, 3000);
   } catch (error) {
@@ -69,7 +89,7 @@ exports.deleteMessage = async (req, res) => {
   const { id } = req.params;
 
   if (!id) {
-    return res.status(404).json({ error: "Id param is required" });
+    return res.status(400).json({ error: "Id param is required" });
   }
 
   try {

@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import { fetchMessages, sendNewMessage } from "../../store/messageSlice";
+import { addMessage } from "../../store/messageSlice";
+import socket from "../../socket/socket";
 
 import MessageItem from "../MessageItem/MessageItem";
 import ChatModal from "../ChatModal/ChatModal";
@@ -60,6 +62,24 @@ function ChatWindow() {
       handleSendMessage();
     }
   };
+
+  useEffect(() => {
+    if (selectedChat) {
+      socket.emit("joinChat", selectedChat._id);
+
+      const messageHandler = (message) => {
+        if (message.chatId === selectedChat._id) {
+          dispatch(addMessage(message));
+        }
+      };
+
+      socket.on("newMessage", messageHandler);
+
+      return () => {
+        socket.off("newMessage", messageHandler);
+      };
+    }
+  }, [selectedChat, dispatch]);
 
   useEffect(() => {
     if (selectedChat) {

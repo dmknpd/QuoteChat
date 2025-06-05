@@ -64,6 +64,38 @@ const chatSlice = createSlice({
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
+    addChat: (state, action) => {
+      state.chats.unshift(action.payload);
+    },
+    updateChatInList: (state, action) => {
+      const index = state.chats.findIndex(
+        (chat) => chat._id === action.payload._id
+      );
+      if (index !== -1) {
+        const oldLastMessage = state.chats[index].lastMessage;
+        state.chats[index] = { ...action.payload, lastMessage: oldLastMessage };
+      }
+      if (state.selectedChat?._id === action.payload._id) {
+        state.selectedChat = { ...state.selectedChat, ...action.payload };
+      }
+    },
+    updateLastMessage: (state, action) => {
+      const { chatId, lastMessage } = action.payload;
+      const chatIndex = state.chats.findIndex((chat) => chat._id === chatId);
+      if (chatIndex !== -1) {
+        state.chats[chatIndex].lastMessage = lastMessage;
+        const updatedChat = state.chats.splice(chatIndex, 1);
+        state.chats.unshift(updatedChat[0]);
+      }
+    },
+    deleteChatFromList: (state, action) => {
+      const chatIdToRemove = action.payload;
+      state.chats = state.chats.filter((chat) => chat._id !== chatIdToRemove);
+      if (state.selectedChat?._id === chatIdToRemove) {
+        state.selectedChat = null;
+      }
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder //fetchChats
@@ -82,7 +114,6 @@ const chatSlice = createSlice({
       })
       //createNewChat
       .addCase(createNewChat.fulfilled, (state, action) => {
-        state.chats.push(action.payload);
         state.chatModalErrors = null;
       })
       .addCase(createNewChat.rejected, (state, action) => {
@@ -90,16 +121,6 @@ const chatSlice = createSlice({
       })
       //updateExistingChat
       .addCase(updateExistingChat.fulfilled, (state, action) => {
-        const index = state.chats.findIndex(
-          (chat) => chat._id === action.payload._id
-        );
-        if (index !== -1) {
-          state.chats[index] = action.payload;
-        }
-
-        if (state.selectedChat?._id === action.payload._id) {
-          state.selectedChat = action.payload;
-        }
         state.chatModalErrors = null;
       })
       .addCase(updateExistingChat.rejected, (state, action) => {
@@ -108,6 +129,7 @@ const chatSlice = createSlice({
       //removeChat
       .addCase(removeChat.fulfilled, (state, action) => {
         state.chats = state.chats.filter((chat) => chat._id !== action.payload);
+
         if (state.selectedChat?._id === action.payload) {
           state.selectedChat = null;
         }
@@ -119,6 +141,13 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setSelectedChat, setChatModalErrors, setSearchQuery } =
-  chatSlice.actions;
+export const {
+  setSelectedChat,
+  setChatModalErrors,
+  setSearchQuery,
+  addChat,
+  updateChatInList,
+  updateLastMessage,
+  deleteChatFromList,
+} = chatSlice.actions;
 export default chatSlice.reducer;
