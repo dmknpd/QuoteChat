@@ -3,11 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-<<<<<<< HEAD
-    "render-postbuild": "cd ../frontend && npm install && npm build"
-=======
->>>>>>> 8fe2a57494a5de433ff99fdc792ceb7ab84dcd21
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
