@@ -1,16 +1,17 @@
-const axios = require("axios");
-
 const Message = require("../models/message");
 const Chat = require("../models/chat");
 
 const getRandomQuote = require("../utils/quoteUtils");
 
 let autoSendInterval = null;
+let isAutoSendingEnabled = false;
 
 const startAutoSending = async (io) => {
   if (autoSendInterval) return;
 
   console.log("Starting auto-message sender...");
+  isAutoSendingEnabled = true;
+
   autoSendInterval = setInterval(async () => {
     try {
       const chats = await Chat.find().lean();
@@ -50,6 +51,8 @@ const stopAutoSending = () => {
     clearInterval(autoSendInterval);
     autoSendInterval = null;
   }
+
+  isAutoSendingEnabled = false;
 };
 
 const toggleAutoSender = (req, res) => {
@@ -58,13 +61,18 @@ const toggleAutoSender = (req, res) => {
 
   if (enabled) {
     startAutoSending(io);
-    res.status(200).json({ message: "Auto-sender started" });
   } else {
     stopAutoSending();
-    res.status(200).json({ message: "Auto-sender stopped" });
   }
+
+  res.status(200).json({ enabled: isAutoSendingEnabled });
+};
+
+const getAutoSenderState = (req, res) => {
+  res.status(200).json({ enabled: isAutoSendingEnabled });
 };
 
 module.exports = {
   toggleAutoSender,
+  getAutoSenderState,
 };

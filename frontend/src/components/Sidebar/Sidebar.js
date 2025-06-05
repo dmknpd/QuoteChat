@@ -1,9 +1,12 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { setSearchQuery } from "../../store/chatSlice";
-import { toggleAutoSender } from "../../api/api";
+import {
+  setSearchQuery,
+  updateAutoSenderStatus,
+  fetchAutoSenderState,
+} from "../../store/chatSlice";
 
 import styles from "./Sidebar.module.css";
 import user_icon from "../../img/user_icon.svg";
@@ -14,8 +17,8 @@ import ChatModal from "../ChatModal/ChatModal";
 
 function Sidebar() {
   const dispatch = useDispatch();
+  const isAutoSending = useSelector((state) => state.chat.isAutoSending);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isAutoSending, setIsAutoSending] = useState(false);
 
   const handleModalOpen = (event) => {
     event.preventDefault();
@@ -28,15 +31,17 @@ function Sidebar() {
 
   const handleToggleAutoSender = async () => {
     try {
-      const newState = !isAutoSending;
-      await toggleAutoSender(newState);
-      setIsAutoSending(newState);
-      toast.success(`Auto-sender ${newState ? "enabled" : "disabled"}!`);
+      dispatch(updateAutoSenderStatus(!isAutoSending));
+      toast.success(`Auto-sender ${!isAutoSending ? "enabled" : "disabled"}!`);
     } catch (error) {
       console.error("Error toggling auto-sender", error);
       toast.error("Could not change auto-sender state.");
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchAutoSenderState());
+  }, [dispatch]);
 
   return (
     <div className={styles.main}>

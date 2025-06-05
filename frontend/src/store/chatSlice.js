@@ -1,5 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getChats, createChat, updateChat, deleteChat } from "../api/api";
+import {
+  getChats,
+  createChat,
+  updateChat,
+  deleteChat,
+  getAutoSenderState,
+  toggleAutoSender,
+} from "../api/api";
 
 export const fetchChats = createAsyncThunk("chat/fetchChats", async () => {
   const response = await getChats();
@@ -44,6 +51,26 @@ export const removeChat = createAsyncThunk(
   }
 );
 
+export const fetchAutoSenderState = createAsyncThunk(
+  "chat/fetchAutoSenderState",
+  async () => {
+    const response = await getAutoSenderState();
+    return response.data.enabled;
+  }
+);
+
+export const updateAutoSenderStatus = createAsyncThunk(
+  "chat/toggleAutoSender",
+  async (enabled, { rejectWithValue }) => {
+    try {
+      const response = await toggleAutoSender(enabled);
+      return response.data.enabled;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const chatSlice = createSlice({
   name: "chat",
   initialState: {
@@ -53,6 +80,7 @@ const chatSlice = createSlice({
     error: null,
     chatModalErrors: null,
     searchQuery: "",
+    isAutoSending: false,
   },
   reducers: {
     setSelectedChat: (state, action) => {
@@ -142,6 +170,13 @@ const chatSlice = createSlice({
       })
       .addCase(removeChat.rejected, (state, action) => {
         state.error = action.error.message;
+      })
+      //autoSender
+      .addCase(fetchAutoSenderState.fulfilled, (state, action) => {
+        state.isAutoSending = action.payload;
+      })
+      .addCase(updateAutoSenderStatus.fulfilled, (state, action) => {
+        state.isAutoSending = action.payload;
       });
   },
 });
@@ -154,5 +189,6 @@ export const {
   updateChatInList,
   updateLastMessage,
   deleteChatFromList,
+  isAutoSending,
 } = chatSlice.actions;
 export default chatSlice.reducer;

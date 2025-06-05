@@ -103,7 +103,7 @@
 }
 
 .auto_sender {
-  padding: 5px;
+  padding: 5px 8px;
   background-color: transparent;
   border: 1px solid var(--secondary-color);
   border-radius: 12px;
@@ -113,4 +113,9 @@
 
 .auto_sender:hover {
   background-color: var(--main-color);
+}
+
+.auto_sender.active {
+  background-color: rgb(196, 95, 95);
+  color: #fff;
 }

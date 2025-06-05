@@ -2,8 +2,10 @@ const axios = require("axios");
 
 async function getRandomQuote() {
   try {
-    const quoteResponse = await axios.get("https://zenquotes.io/api/random");
-    const quote = quoteResponse.data[0].q;
+    const quoteResponse = await axios.get(
+      "https://stoic.tekloon.net/stoic-quote"
+    );
+    const quote = quoteResponse.data.data.quote;
 
     return quote;
   } catch (error) {
