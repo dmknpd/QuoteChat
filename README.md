@@ -195,23 +195,23 @@ npm start
 
    - Error Responses:
 
-    - `400 Bad Request` - Invalid input (e.g., missing fields, validation errors):
-
-      ```json
-      {
-        "errors": {
-          "firstName": "First name is required."
-        }
-      }
-      ```
-
-    - `500 Internal Server Error`:
-    
+      - `400 Bad Request` - Invalid input (e.g., missing fields, validation errors):
+  
         ```json
         {
-        "error": "Failed to create chat"
+          "errors": {
+            "firstName": "First name is required."
+          }
         }
         ```
+  
+      - `500 Internal Server Error`:
+      
+          ```json
+          {
+          "error": "Failed to create chat"
+          }
+          ```
 
 - **Update Existing Chat:**
 
@@ -250,7 +250,7 @@ npm start
       }
       ```
 
- - `404 Not Found` - Chat not found:
+   - `404 Not Found` - Chat not found:
 
       ```json
       {
