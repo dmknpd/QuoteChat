@@ -7,9 +7,9 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-red)](https://www.mongodb.com/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
 
-[**Live Demo**](https://quotechat-a817.onrender.com) | [**Backend API**](https://quotechat-e1qu.onrender.com)
+[**Live Demo**](https://quotechat-a817.onrender.com) | [**Backend API**](https://quotechat-e1qu.onrender.com/api/chats)
 
-*Note: Before using the live demo, please visit the [Backend API](https://quotechat-e1qu.onrender.com) link to "wake up" the backend server, as it might be in sleep mode.*
+*Note: Before using the live demo, please visit the [Backend API](https://quotechat-e1qu.onrender.com/api/chats) link to "wake up" the backend server, as it might be in sleep mode.*
 
 A real-time chat application with integrated automatic motivational quote delivery.
 
