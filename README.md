@@ -59,7 +59,7 @@ Ensure you have the following installed on your system:
 
 ### Step-by-step Setup Instructions
 
-** 1. Clone the repository: **
+**1. Clone the repository:**
 
 ```bash
 git clone https://github.com/dmknpd/QuoteChat.git
@@ -68,14 +68,14 @@ cd QuoteChat
 
 **2. Backend Setup:**
 
-### Navigate into the backend directory and install backend dependencies:
+- Navigate into the backend directory and install backend dependencies:
 
 ```bash
 cd backend
 npm install
 ```
 
-### Create a .env file in the backend directory. Populate it with your environment variables:
+- Create a .env file in the backend directory. Populate it with your environment variables:
 
 ```bash
 PORT=5000
@@ -83,7 +83,7 @@ MONGO_URI=mongodb://localhost:27017/quotechat # Replace with your MongoDB connec
 FRONT_HOST=http://localhost:3000 # Or the deployed frontend URL
 ```
 
-### Start the backend server:
+- Start the backend server:
 
 ```bash
 npm start
@@ -93,14 +93,14 @@ npm start
 
 **3. Frontend Setup:**
 
-### Open a new terminal session and navigate to the frontend directory and install frontend dependencies:
+- Open a new terminal session and navigate to the frontend directory and install frontend dependencies:
 
 ```bash
 cd ../frontend
 npm install
 ```
 
-### Start the frontend development server:
+- Start the frontend development server:
 
 ```bash
 npm start
