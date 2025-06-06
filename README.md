@@ -16,11 +16,11 @@ The QuoteChat Application is a dynamic chat service designed to enhance user com
 This project addresses the need for interactive communication tools that offer more than just basic messaging. Its standout feature is the "auto-sender," which dispatches curated quotes to active chats at regular intervals, providing users with positive reinforcement and a distinct conversational experience.
 
 ### Key Functionalities
-- Real-time message exchange between users.
-- Comprehensive chat management: creation, editing, and deletion.
-- Automated system for generating and delivering inspirational quotes.
-- Search and filtering capabilities for efficient chat navigation.
-- A toggle mechanism to activate or deactivate the auto-sender feature.
+  - User-to-Bot Messaging: Users can send messages to a chat and receive responses from a bot.
+  - Automated Quote Responses: The bot automatically generates and sends inspirational quotes in response to user messages.
+  - Comprehensive Chat Management: Ability to create, edit, and delete chats (interactions with bots).
+  - Chat Search and Filtering: Search and filtering functionalities for efficient navigation through bot chats.
+  - Auto-Sender Toggle: A mechanism to activate or deactivate the bot's automatic quote sending feature.
 
 ## Features
 
@@ -46,6 +46,10 @@ This project addresses the need for interactive communication tools that offer m
 - **State Management**
   - **Redux Toolkit:** Utilized for predictable and centralized state management, handling complex application states like chat lists, messages, and UI errors.
   - **Redux Thunks:** Manages asynchronous operations, such as API calls for fetching/creating chats and messages, ensuring a clean and robust data flow.
+ 
+### Links
+  Frontend: https://quotechat-a817.onrender.com/
+  Backend:  https://quotechat-e1qu.onrender.com/api/chats
 
 ## Installation
 
