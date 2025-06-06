@@ -207,9 +207,99 @@ npm start
 
     - `500 Internal Server Error`:
     
-          ```json
-          {
-          "error": "Failed to fetch chats"
-          }
-          ```
+        ```json
+        {
+        "error": "Failed to create chat"
+        }
+        ```
 
+- **Update Existing Chat:**
+
+  - `PATCH /:id`
+  - Request body:
+
+    ```json
+    {
+      "firstName": "Jane",
+      "lastName": "Smith"
+    }
+    ```
+
+  - Successful Response (201 Created)::
+
+    ```json
+    {
+      "_id": "newChatId12345",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "createdAt": "2025-06-06T11:00:00.000Z",
+      "updatedAt": "2025-06-06T11:00:00.000Z",
+      "lastMessage": null
+    }
+    ```
+
+   - Error Responses:
+
+    - `400 Bad Request` - Invalid input:
+
+      ```json
+      {
+        "errors": {
+          "firstName": "First name is required."
+        }
+      }
+      ```
+
+ - `404 Not Found` - Chat not found:
+
+      ```json
+      {
+        "error": "Chat not found"
+      }
+      ```
+
+    - `500 Internal Server Error`:
+    
+        ```json
+        {
+        "error": "Failed to update chat"
+        }
+        ```
+
+- **Delete Chat:**
+
+  - `DELETE /:id`
+  - Request body:
+
+    ```json
+    {
+      "firstName": "Jane",
+      "lastName": "Smith"
+    }
+    ```
+
+  - Successful Response (200)::
+
+    ```json
+    {
+        message: "Chat deleted successfully"
+    }
+    ```
+
+   - Error Responses:
+
+     - `404 Not Found` - Chat not found:
+
+        ```json
+        {
+          "error": "Chat not found"
+        }
+        ```
+
+    - `500 Internal Server Error`:
+    
+        ```json
+        {
+        "error": "Failed to delete chat"
+        }
+        ```
