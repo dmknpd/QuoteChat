@@ -458,3 +458,73 @@ npm start
           "error": "Failed to toggle auto-sender"
           }
           ```
+
+## Project Structure
+
+### The project is logically separated into backend (Node.js/Express) and frontend (React), facilitating independent development and deployment.
+
+```bash
+.
+├── backend/                  # Node.js Express API for server-side operations
+│   ├── controllers/          # Handles API request logic and interacts with services/models
+│   ├── models/               # Defines MongoDB schemas for chats and messages
+│   ├── routes/               # Defines API endpoints for chats, messages, and auto-sender
+│   ├── utils/                # General utility functions (e.g., error formatting, quote fetching)
+│   ├── validators/           # Data validation schemas (e.g., Joi for chat input)
+│   ├── .env                  # Environment variables for database connection, port etc.
+│   ├── index.js              # Main entry point for the backend server
+│   └── package.json          # Backend dependencies and scripts
+└── frontend/                 # React application for the user interface
+    ├── public/               # Static assets (HTML, images, sounds)
+    │   └── sounds/
+    │       └── notification.mp3 # Notification sound file
+    ├── src/                  # Source code for the React application
+    │   ├── api/              # Functions for interacting with the backend API
+    │   │   └── api.js
+    │   ├── components/       # Reusable React UI components
+    │   │   ├── ChatList/
+    │   │   ├── ChatListItem/
+    │   │   ├── ChatModal/
+    │   │   ├── ChatWindow/
+    │   │   ├── MessageItem/
+    │   │   └── Sidebar/
+    │   ├── socket/           # Socket.IO client setup for real-time communication
+    │   │   └── socket.js
+    │   ├── store/            # Redux Toolkit store and slices for state management
+    │   │   ├── chatSlice.js    # Manages chat-related state and async actions
+    │   │   ├── messageSlice.js # Manages message-related state and async actions
+    │   │   └── store.js        # Configures the Redux store
+    │   ├── App.css           # Main application-wide CSS
+    │   ├── App.js            # Root component of the React application
+    │   ├── index.css         # Global CSS styles
+    │   └── index.js          # Entry point for React DOM rendering
+    └── package.json          # Frontend dependencies and scripts
+```
+
+## Dependencies
+
+### Backend Dependencies
+
+| Package       | Purpose                                                                                   |
+| ------------- | ----------------------------------------------------------------------------------------- |
+| **express**   | Web framework for building APIs and web servers                                           |
+| **mongoose**  | MongoDB object modeling tool for Node.js, used for managing data schemas                  |
+| **dotenv**    | Loads environment variables from a `.env` file                                            |
+| **axios**     | Promise-based HTTP client for making API requests                                         |
+| **socket.io** | Enables real-time, bidirectional, event-based communication                               |
+| **joi**       | Object schema description language and validator for JavaScript                           |
+| **cors**      | Express middleware that enables Cross-Origin Resource Sharing (CORS)                      |
+
+
+### Frontend Dependencies
+
+| Package                         | Purpose                                                                                       |
+| ------------------------------- | --------------------------------------------------------------------------------------------- |
+| **react**                       | JavaScript library for building user interfaces                                               |
+| **react-dom**                   | React package for interacting with the DOM                                                    |
+| **@reduxjs/toolkit**            | The official, opinionated, batteries-included toolset for Redux                               |
+| **react-redux**                 | Official bindings to connect React components to the Redux store                              |
+| **axios**                       | Promise-based HTTP client for making backend API requests                                     |
+| **socket.io-client**            | Client-side library for enabling real-time communication with Socket.IO                       |
+| **react-toastify**              | Easy-to-use toast notification component for React                                            |
+
