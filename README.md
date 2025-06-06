@@ -135,6 +135,8 @@ npm start
 
 #### Base URL: http://localhost:5000/api/chats
  
+### Chats
+
 - **Get All Chats:**
 
   - `GET /`
