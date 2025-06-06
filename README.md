@@ -399,3 +399,62 @@ npm start
           }
           ```
 
+### Auto-Sender
+
+- **Get Auto-Sender State**
+
+  - `GET /auto-sender`
+  - Successful Response (200):
+
+    ```json
+      {
+      "enabled": true
+      }
+    ```
+
+  - Error Responses:
+
+    - `500 Internal Server Error`:
+
+      ```json
+      {
+        "error": "Failed to fetch messages"
+      }
+      ```
+
+- **Toggle Auto-Sender Status:**
+
+  - `POST /auto-sender`
+  - Request body:
+
+    ```json
+    {
+      "enabled": true
+    }
+    ```
+
+  - Successful Response (200)::
+
+    ```json
+    {
+      "enabled": true,
+    }
+    ```
+
+   - Error Responses:
+
+      - `400 Bad Request` - Invalid input (e.g., empty text):
+  
+          ```json
+          {
+            "error": "Invalid input"
+          }
+          ```
+
+      - `500 Internal Server Error`:
+      
+          ```json
+          {
+          "error": "Failed to toggle auto-sender"
+          }
+          ```
