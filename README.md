@@ -133,13 +133,13 @@ npm start
 
 ## API Endpoints
 
-#### Base URL: http://localhost:5000/api/chats
+#### Base URL: http://localhost:5000/api
  
 ### Chats
 
 - **Get All Chats:**
 
-  - `GET /`
+  - `GET /chats`
   - Successful Response (200):
 
     ```json
@@ -172,7 +172,7 @@ npm start
 
 - **Create New Chat:**
 
-  - `POST /`
+  - `POST /chats`
   - Request body:
 
     ```json
@@ -217,7 +217,7 @@ npm start
 
 - **Update Existing Chat:**
 
-  - `PATCH /:id`
+  - `PATCH /chats/:id`
   - Request body:
 
     ```json
@@ -270,7 +270,7 @@ npm start
 
 - **Delete Chat:**
 
-  - `DELETE /:id`
+  - `DELETE /chats/:id`
   - Request body:
 
     ```json
@@ -305,3 +305,97 @@ npm start
           "error": "Failed to delete chat"
           }
           ```
+
+### Messages
+
+- **Get Messages for a Chat:**
+
+  - `GET /chats/messages/:chatId`
+  - Successful Response (200):
+
+    ```json
+    [
+        {
+          "_id": "messageId1",
+          "chat": "chatId123",
+          "text": "Hi there!",
+          "isAutoMessage": false,
+          "createdAt": "2025-06-05T10:00:00.000Z"
+        },
+        {
+          "_id": "messageId2",
+          "chat": "chatId123",
+          "text": "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+          "isAutoMessage": true,
+          "createdAt": "2025-06-05T10:05:00.000Z"
+        }
+    ]
+    ```
+
+  - Error Responses:
+
+    - `404 Not Found` - Chat not found:
+  
+        ```json
+        {
+          "error": "Chat not found"
+        }
+        ```
+
+    - `500 Internal Server Error`:
+
+      ```json
+      {
+        "error": "Failed to fetch messages"
+      }
+      ```
+
+- **Send Message to a Chat:**
+
+  - `POST /chats/messages/:chatId`
+  - Request body:
+
+    ```json
+    {
+      "text": "This is a new message."
+    }
+    ```
+
+  - Successful Response (201 Created)::
+
+    ```json
+    {
+      "_id": "newMessageId456",
+      "chat": "chatId123",
+      "text": "This is a new message.",
+      "isAutoMessage": false,
+      "createdAt": "2025-06-06T12:00:00.000Z"
+    }
+    ```
+
+   - Error Responses:
+
+      - `400 Bad Request` - Invalid input (e.g., empty text):
+  
+          ```json
+          {
+            "error": "Message text is required"
+          }
+          ```
+
+      - `404 Not Found` - Chat not found:
+        
+          ```json
+          {
+            "error": "Chat not found"
+          }
+          ```
+
+      - `500 Internal Server Error`:
+      
+          ```json
+          {
+          "error": "Failed to send message"
+          }
+          ```
+
