@@ -106,5 +106,22 @@ npm install
 npm start
 ```
 
--The frontend application will typically open in your default browser at `http://localhost:3000`
+- The frontend application will typically open in your default browser at `http://localhost:3000`
 
+## Usage
+
+Once both the backend and frontend services are operational:
+
+**1. Access the Application: Open your web browser and navigate to `http://localhost:3000`.**
+**2. Manage Chats:**
+  - Create: Click the + icon in the sidebar's search bar to open the chat creation modal. Enter the required details and save.
+  - Select: Click on any chat in the left sidebar to load its conversation history in the main chat window.
+  - Edit: Click the "edit" icon next to a chat in the sidebar or in the chat window header to update its details.
+  - Delete: Click the "X" icon next to a chat in the sidebar to remove it.
+**3. Send Messages: In the active chat window, type your message in the input field at the bottom and press Enter or click the send button.**
+**4. Utilize Auto-Sender:**
+  - Click the "Start Auto-Sender" button in the sidebar to enable the automatic quote delivery.
+  - Quotes will be sent to a random chat at intervals (e.g., every 5 seconds, as configured in the backend).
+  - Click "Stop Auto-Sender" to pause this feature.
+**5. Notifications: When a new auto-message arrives, a toast notification will appear in the bottom-right corner of your screen, accompanied by a sound. Clicking this notification will switch you to the corresponding chat.**
+**6.Search Chats: Use the search bar in the sidebar to filter your chat list by participant names.**
