@@ -59,7 +59,7 @@ Ensure you have the following installed on your system:
 
 ### Step-by-step Setup Instructions
 
-**1. Clone the repository:**
+** 1. Clone the repository: **
 
 ```bash
 git clone https://github.com/dmknpd/QuoteChat.git
