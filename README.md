@@ -110,7 +110,7 @@ npm start
 
 ## Usage
 
-Once both the backend and frontend services are operational:
+#### Once both the backend and frontend services are operational:
 
 **1. Access the Application: Open your web browser and navigate to `http://localhost:3000`.**
 
@@ -130,3 +130,86 @@ Once both the backend and frontend services are operational:
 **5. Notifications: When a new auto-message arrives, a toast notification will appear in the bottom-right corner of your screen, accompanied by a sound. Clicking this notification will switch you to the corresponding chat.**
 
 **6. Search Chats: Use the search bar in the sidebar to filter your chat list by participant names.**
+
+## API Endpoints
+
+#### Base URL: http://localhost:5000/api/chats
+ 
+- **Get All Chats:**
+
+  - `GET /`
+  - Successful Response (200):
+
+    ```json
+    [
+      {
+      "_id": "654321098765432109876543",
+      "firstName": "John",
+      "lastName": "Doe",
+      "lastMessage": {
+        "_id": "123456789012345678901234",
+        "chat": "654321098765432109876543",
+        "text": "Hello there!",
+        "createdAt": "2025-06-05T12:00:00.000Z"
+      },
+      "createdAt": "2025-06-01T10:00:00.000Z",
+      "updatedAt": "2025-06-05T12:00:00.000Z"
+      }
+    ]
+    ```
+
+  - Error Responses:
+
+    - `500 Internal Server Error`:
+
+      ```json
+      {
+      "error": "Failed to fetch chats"
+      }
+      ```
+
+- **Create New Chat:**
+
+  - `POST /`
+  - Request body:
+
+    ```json
+    {
+      "firstName": "Jane",
+      "lastName": "Smith"
+    }
+    ```
+
+  - Successful Response (201 Created)::
+
+    ```json
+    {
+      "_id": "newChatId12345",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "createdAt": "2025-06-06T11:00:00.000Z",
+      "updatedAt": "2025-06-06T11:00:00.000Z",
+      "lastMessage": null
+    }
+    ```
+
+   - Error Responses:
+
+    - `400 Bad Request` - Invalid input (e.g., missing fields, validation errors):
+
+      ```json
+      {
+        "errors": {
+          "firstName": "First name is required."
+        }
+      }
+      ```
+
+    - `500 Internal Server Error`:
+    
+          ```json
+          {
+          "error": "Failed to fetch chats"
+          }
+          ```
+
