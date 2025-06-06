@@ -7,6 +7,9 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-red)](https://www.mongodb.com/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
 
+[**Live Demo**](https://quotechat-a817.onrender.com) | [**Backend API**](https://quotechat-e1qu.onrender.com)
+*Note: Before using the live demo, please visit the [Backend API](https://quotechat-e1qu.onrender.com) link to "wake up" the backend server, as it might be in sleep mode.*
+
 A real-time chat application with integrated automatic motivational quote delivery.
 
 ## Description
@@ -47,10 +50,6 @@ This project addresses the need for interactive communication tools that offer m
   - **Redux Toolkit:** Utilized for predictable and centralized state management, handling complex application states like chat lists, messages, and UI errors.
   - **Redux Thunks:** Manages asynchronous operations, such as API calls for fetching/creating chats and messages, ensuring a clean and robust data flow.
  
-### Links
-  Frontend: https://quotechat-a817.onrender.com/
-  Backend:  https://quotechat-e1qu.onrender.com/api/chats
-
 ## Installation
 
 ### Prerequisites
