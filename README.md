@@ -240,31 +240,31 @@ npm start
 
    - Error Responses:
 
-    - `400 Bad Request` - Invalid input:
-
-      ```json
-      {
-        "errors": {
-          "firstName": "First name is required."
-        }
-      }
-      ```
-
-   - `404 Not Found` - Chat not found:
-
-      ```json
-      {
-        "error": "Chat not found"
-      }
-      ```
-
-    - `500 Internal Server Error`:
-    
+      - `400 Bad Request` - Invalid input:
+  
         ```json
         {
-        "error": "Failed to update chat"
+          "errors": {
+            "firstName": "First name is required."
+          }
         }
         ```
+  
+     - `404 Not Found` - Chat not found:
+  
+        ```json
+        {
+          "error": "Chat not found"
+        }
+        ```
+  
+      - `500 Internal Server Error`:
+      
+          ```json
+          {
+          "error": "Failed to update chat"
+          }
+          ```
 
 - **Delete Chat:**
 
@@ -282,7 +282,7 @@ npm start
 
     ```json
     {
-        message: "Chat deleted successfully"
+        "message": "Chat deleted successfully"
     }
     ```
 
@@ -296,10 +296,10 @@ npm start
         }
         ```
 
-    - `500 Internal Server Error`:
-    
-        ```json
-        {
-        "error": "Failed to delete chat"
-        }
-        ```
+      - `500 Internal Server Error`:
+      
+          ```json
+          {
+          "error": "Failed to delete chat"
+          }
+          ```
