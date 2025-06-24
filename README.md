@@ -15,7 +15,7 @@ A real-time chat application with integrated automatic motivational quote delive
 
 ## Description
 
-The QuoteChat Application is a dynamic chat service designed to enhance user communication by incorporating real-time messaging capabilities with a unique feature: automated motivational quote generation and delivery. It serves as an engaging platform where users can manage their conversations and receive inspiring messages, blending traditional chat functionality with a uplifting, unexpected element.
+The QuoteChat Application is a dynamic chat service where users interact with a bot that automatically sends motivational quotes. It combines real-time messaging with an uplifting twist, offering an engaging experience that blends regular chat features with inspiring, automated content.
 
 This project addresses the need for interactive communication tools that offer more than just basic messaging. Its standout feature is the "auto-sender," which dispatches curated quotes to active chats at regular intervals, providing users with positive reinforcement and a distinct conversational experience.
 
