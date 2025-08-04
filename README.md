@@ -90,7 +90,7 @@ FRONT_HOST=http://localhost:3000 # Or the deployed frontend URL
 - Start the backend server:
 
 ```bash
-npm start
+npm run start
 ```
 
 - The backend server will run on `http://localhost:5000` (or your specified PORT)
@@ -107,7 +107,7 @@ npm install
 - Start the frontend development server:
 
 ```bash
-npm start
+npm run start
 ```
 
 - The frontend application will typically open in your default browser at `http://localhost:3000`
