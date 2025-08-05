@@ -1,7 +1,8 @@
 import axios from "axios";
+import { BACKEND_HOST, BACKEND_PORT } from "../config/config";
 
 const Api = axios.create({
-  baseURL: "http://localhost:5000/api/chats",
+  baseURL: `${BACKEND_HOST}:${BACKEND_PORT}/api/chats`,
 });
 
 export const getChats = () => Api.get("/");
