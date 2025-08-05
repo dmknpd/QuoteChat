@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Api = axios.create({
-  baseURL: "https://quotechat-e1qu.onrender.com/api/chats",
+  baseURL: "http://localhost:5000/api/chats",
 });
 
 export const getChats = () => Api.get("/");

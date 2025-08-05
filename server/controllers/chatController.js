@@ -2,6 +2,7 @@ const chatSchema = require("../validators/chatValidator");
 const formatErrors = require("../utils/formatErrors");
 
 const Chat = require("../models/chat");
+const Message = require("../models/message");
 
 exports.getAllChats = async (req, res) => {
   try {
@@ -129,6 +130,7 @@ exports.deleteChat = async (req, res) => {
     }
 
     await chat.deleteOne();
+    await Message.deleteMany({ chatId: id });
 
     io.emit("chatDeleted", id);
 
